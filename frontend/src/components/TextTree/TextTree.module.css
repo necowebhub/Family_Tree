@@ -1,0 +1,4 @@
+.node { margin:6px 0; }
+.clickable { cursor:pointer; padding:6px; border-radius:6px; display:inline-block; }
+.clickable:hover { background:#f3f3f3; }
+.title { font-weight:500; }
