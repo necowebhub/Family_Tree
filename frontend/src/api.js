@@ -4,6 +4,7 @@ import {
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "./firebase";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 
 // TREE
 export async function getTree() {
@@ -50,4 +51,16 @@ export async function uploadFile(file) {
     await uploadBytes(storageRef, file);
     const url = await getDownloadURL(storageRef);
     return { url };
+}
+
+export async function login(email, password) {
+    return signInWithEmailAndPassword(auth, email, password);    
+}
+
+export async function logout() {
+    return signOut(auth);
+}
+
+export async function onAuthChange(cb) {
+    return onAuthStateChanged(auth, cb);
 }
