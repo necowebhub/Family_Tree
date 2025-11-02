@@ -9,7 +9,7 @@ export default function App() {
         <Routes>
             <Route path="/" element={<PublicPage />} />
             <Route path="/admin" element={<AdminPage />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<PublicPage />} />
         </Routes>
     );
 }
