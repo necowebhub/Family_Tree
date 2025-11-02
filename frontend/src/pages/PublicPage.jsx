@@ -20,7 +20,7 @@ export default function PublicPage() {
             <Navbar />
             <main style={{padding: "20px", maxWidth: 900, margin: "0 auto"}}>
                 <section style={{marginBottom: 30}}>
-                    <h2>Вложенные строки</h2>
+                    <h2>Семейное дерево Антипиных</h2>
                     <TextTree items={items} />
                 </section>
 
