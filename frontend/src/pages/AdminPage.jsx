@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Children, useEffect, useState } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import { getTree, createNode, updateNode, deleteNode, getSingleText, updateSingleText, uploadFile, getFooter, login, logout, onAuthChange, resetPassword, changePassword} from "../api";
 import { useNavigate } from "react-router-dom";
@@ -25,8 +25,43 @@ export default function AdminPage(){
         return ()=> unsub();
     },[]);
 
+    function buildOrderedTree(items) {
+        const map = {};
+        const roots = {};
+
+        items.forEach((item) => {
+            map[item.id] = { ...item, children: [] };
+        });
+
+        items.forEach((item) => {
+            if (item.parent_id && map[item.parent_id]) {
+                map[item.parent_id].children.push(map[item.id]);
+            } else {
+                roots.push(map[item.id]);
+            }
+        });
+
+        const sortRecursively = (nodes) => {
+            nodes.sort((a, b) => (a.order || 0) - (b.order || 0));
+            nodes.forEach((n) => sortRecursively(n.children));
+        };
+        sortRecursively(roots);
+
+        const result = [];
+        const flatten = (nodes, depth = 0) => {
+            nodes.forEach((n) => {
+                result.push({ ...n, depth });
+                if (n.children.length > 0) flatten(n.children, depth + 1);
+            })
+        };
+        flatten(roots);
+
+        return result;
+    }
+
     async function refresh(){
         const tree = await getTree();
+        const sortedTree = buildOrderedTree(tree);
         setItems(tree);
     }
 
@@ -195,9 +230,9 @@ export default function AdminPage(){
                     <h3>Семейное дерево Антипиных</h3>
                     <button onClick={() => onAdd(null)}>Добавить корневой</button>
                     <ul>
-                        {items.sort((a, b) => (a.order || 0) - (b.order || 0)).map(it=>(
-                            <li key={it.id} style={{ marginBottom: 6 }}>
-                                <span style={{ cursor: "pointer" }} onClick={() => setSelected({ ...it })}>{it.title || "(без заголовка)"}</span>
+                        {items.map((it)=>(
+                            <li key={it.id} style={{ marginBottom: 6, marginLeft: '${it.depth * 20}px' }}>
+                                <span style={{ cursor: "pointer", fontWeight: it.depth == 0 ? "bold" : "normal" }} onClick={() => setSelected({ ...it })}>{it.title || "(без заголовка)"}</span>
                                 &nbsp;
                                 <button onClick={()=>onAdd(it.id)}>+child</button>
                                 <button onClick={()=>moveOrder(it.id,'up')}>↑</button>
@@ -247,7 +282,9 @@ export default function AdminPage(){
                             </div>
                         </>
                     )}
-                    
+                </div>
+
+                <div style={{flex: 1}}>
                     <hr/>
                     <h3>История семьи Антипиных</h3>
                     <textarea rows={10} style={{ width: '100%' }} value={singleText} onChange={(e) => setSingleText(e.target.value)} />
