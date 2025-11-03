@@ -25,7 +25,7 @@ export default function PublicPage() {
                 </section>
 
                 <section style={{marginBottom: 30}}>
-                    <h2>Блок сплошного текста</h2>
+                    <h3>История семьи Антипиных</h3>
                     <div dangerouslySetInnerHTML={{__html: singleText}} />
                 </section>
             </main>

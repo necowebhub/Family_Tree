@@ -4,7 +4,7 @@ import {
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "./firebase";
-import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, updatePassword } from "firebase/auth";
 
 // TREE
 export async function getTree() {
@@ -63,4 +63,13 @@ export async function logout() {
 
 export async function onAuthChange(cb) {
     return onAuthStateChanged(auth, cb);
+}
+
+export function resetPassword(email) {
+    return sendPasswordResetEmail(auth, email);
+}
+
+export async function changePassword(newPassword) {
+    if (!auth.currentUser) throw new Error("Пользователь не вошел");
+    await updatePassword(auth.currentUser, newPassword);
 }
