@@ -1,10 +1,7 @@
-import {
-    collection, doc, getDocs, getDoc,
-    addDoc, updateDoc, deleteDoc, setDoc
-} from "firebase/firestore";
+import { auth, db, storage } from "./firebase";
+import { collection, doc, getDocs, getDoc, addDoc, updateDoc, deleteDoc, setDoc } from "firebase/firestore";
+import { onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, updatePassword, signOut } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db, storage } from "./firebase";
-import { onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, updatePassword } from "firebase/auth";
 
 // TREE
 export async function getTree() {
@@ -61,8 +58,8 @@ export async function logout() {
     return signOut(auth);
 }
 
-export async function onAuthChange(cb) {
-    return onAuthStateChanged(auth, cb);
+export async function onAuthChange(callback) {
+    return onAuthStateChanged(auth, callback);
 }
 
 export function resetPassword(email) {
