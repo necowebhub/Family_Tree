@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { DndContext, closestCenter, useDraggable, useDroppable } from "@dnd-kit/core";
 import { buildTree } from "../../utils/buildTree";
 import { updateNode } from "../../api";
-import styles from "./TextTree.module.css";
+import styles from "./TreeEditor.module.css";
 
 
 function DraggableNode({ node, depth = 0, onSelect }) {
