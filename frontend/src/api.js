@@ -10,7 +10,26 @@ export async function getTree() {
 }
 
 export async function createNode(data) {
-    const docRef = await addDoc(collection(db, "components"), data);
+    const snapshot = await getDocs(collection(db, "components"));
+    const sameParent = snapshot.docs
+        .map((d) => d.data())
+        .filter((d) => d.parent_id === (data.parent_id || null));
+
+    const maxPosition =
+        sameParent.length > 0
+            ? Math.max(...sameParent.map((d) => d.position ?? 0))
+            : -1;
+
+    const docRef = await addDoc(collection(db, "components"), {
+        title: data.title || "Новый элемент",
+        content: data.content || "",
+        comment_text: data.comment_text || "",
+        comment_image_url: data.comment_image_url || "",
+        image_url: data.image_url || "",
+        parent_id: data.parent_id || null,
+        position: maxPosition + 1, // следующий по порядку
+    });
+
     const snap = await getDoc(docRef);
     return { id: snap.id, ...snap.data() };
 }

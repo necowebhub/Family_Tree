@@ -1,4 +1,22 @@
-.node { margin:6px 0; }
-.clickable { cursor:pointer; padding:6px; border-radius:6px; display:inline-block; }
-.clickable:hover { background:#f3f3f3; }
-.title { font-weight:500; }
+.tree {
+    padding: 10px;
+}
+
+.node {
+    margin-bottom: 4px; 
+}
+
+.clickable { 
+    cursor: pointer; 
+    padding: 4px 6px; 
+    border-radius: 6px; 
+    transition: background 0.2s;
+}
+
+.clickable:hover { 
+    background: #f3f3f3; 
+}
+
+.title { 
+    font-weight: 500; 
+}
