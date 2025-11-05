@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { DndContext, closestCenter, useDraggable, useDroppable } from "@dnd-kit/core";
+import { DndContext, closestCenter, useDraggable, useDroppable, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { buildTree } from "../../utils/buildTree";
 import { updateNode } from "../../api";
 import styles from "./TreeEditor.module.css";
@@ -55,6 +55,14 @@ function DraggableNode({ node, depth = 0, onSelect }) {
 
 
 export default function TreeEditor({ items, setItems, onSelect }) {
+    const sensors = useSensors(
+        useSensor(MouseSensor, {
+            activationConstraint: {
+                distance: 8
+            },
+        })
+    );
+    
     const tree = useMemo(() => buildTree(items), [items]);
 
     async function handleDragEnd(event) {
@@ -116,7 +124,7 @@ export default function TreeEditor({ items, setItems, onSelect }) {
     }
 
     return (
-        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <div className={styles.treeContainer}>
                 {tree.map((node) => (
                     <DraggableNode key={node.id} node={node} onSelect={onSelect} />
