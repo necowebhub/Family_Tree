@@ -214,81 +214,83 @@ export default function AdminPage() {
         <div>
             <Navbar isAdmin onLogout={onLogout} />
 
-            <div style={{ padding: "10px 20px" }}>
-                <button onClick={() => setShowChangePass(true)}>Сменить пароль</button>
-            </div>
-
-            {showChangePass && (
+            <div style={{padding: "20px", maxWidth: 900, margin: "0 auto"}}>
                 <div style={{ padding: "10px 20px" }}>
-                    <h3>Смена пароля</h3>
-                    <label>Новый пароль<br />
-                        <input type="password" value={newPass} onChange={(e) => setNewPass(e.target.value)}/>
-                    </label>
-                    <br />
-                    <button onClick={onChangePassword}>Сменить</button>
-                    <button onClick={() => setShowChangePass(false)} style={{ marginLeft: 10 }}>Отмена</button>
-                </div>
-            )}
-
-            <div style={{ display: 'flex', gap: 20, padding: 20 }}>
-                <div style={{ flex: 1 }}>
-                    <h3>Семейное дерево Антипиных</h3>
-                    <TreeEditor items={items} setItems={setItems} onSelect={setSelected} onAdd={onAdd} onDelete={onDelete} />
+                    <button onClick={() => setShowChangePass(true)}>Сменить пароль</button>
                 </div>
 
-                <div style={{ flex: 1 }}>
-                    <h3>Редактор выбранного</h3>
-                    {!selected ? (
-                        <div>Выбери компонент слева</div>
-                    ) : (
-                        <>
-                            <label>Title<br/>
-                                <input value={selected.title || ""} onChange={(e) => setSelected({ ...selected, title: e.target.value })}/>
-                            </label><br/>
-                            <label>Content (HTML/markdown)<br/>
-                                <textarea rows={6} value={selected.content || ""} onChange={(e) => setSelected({ ...selected, content: e.target.value })}/>
-                            </label><br/>
-                            <label>Comment text<br/>
-                                <textarea rows={3} value={selected.comment_tex || ""} onChange={(e) => setSelected({ ...selected, comment_text: e.target.value })}/>
-                            </label><br/>
-                            <label>Comment image (URL)<br/>
-                                <input value={selected.comment_image_url || ""} onChange={(e) => setSelected({ ...selected, comment_image_url: e.target.value })}/>
-                            </label>
-                            <br/>
-                            <label>Upload comment image<br/>
-                                <input type="file" onChange={onUploadCommentImage} />
-                            </label>
-                            <br/>
-                            <label>Image (URL)<br/>
-                                <input value={selected.image_url || ""} onChange={(e) => setSelected({ ...selected, image_url: e.target.value })}/>
-                            </label>
-                            <br/>
-                            <label>Upload image<br/>
-                                <input type="file" onChange={onUploadImage} />
-                            </label>
-                            <br/>
-                            <label>Order (число)<br/>
-                                <input type="number" value={selected.order || 0} onChange={(e) => setSelected({ ...selected, order: Number(e.target.value) })}/>
-                            </label><br/>
-                            <div style={{ marginTop: 10 }}>
-                                <button onClick={onSave}>Сохранить</button>
-                            </div>
-                        </>
-                    )}
-                </div>
-            </div>
+                {showChangePass && (
+                    <div style={{ padding: "10px 20px" }}>
+                        <h3>Смена пароля</h3>
+                        <label>Новый пароль<br />
+                            <input type="password" value={newPass} onChange={(e) => setNewPass(e.target.value)}/>
+                        </label>
+                        <br />
+                        <button onClick={onChangePassword}>Сменить</button>
+                        <button onClick={() => setShowChangePass(false)} style={{ marginLeft: 10 }}>Отмена</button>
+                    </div>
+                )}
 
-            <div style={{padding: "20px", maxWidth: 900, margin: "0 auto", flex: 1}}>
+                <div style={{ display: 'flex', gap: 20, padding: 20 }}>
+                    <div style={{ flex: 1 }}>
+                        <h3>Семейное дерево Антипиных</h3>
+                        <TreeEditor items={items} setItems={setItems} onSelect={setSelected} onAdd={onAdd} onDelete={onDelete} />
+                    </div>
+
+                    <div style={{ flex: 1 }}>
+                        <h3>Редактор выбранного</h3>
+                        {!selected ? (
+                            <div>Выбери компонент слева</div>
+                        ) : (
+                            <>
+                                <label>Title<br/>
+                                    <input value={selected.title || ""} onChange={(e) => setSelected({ ...selected, title: e.target.value })}/>
+                                </label><br/>
+                                <label>Content (HTML/markdown)<br/>
+                                    <textarea rows={6} value={selected.content || ""} onChange={(e) => setSelected({ ...selected, content: e.target.value })}/>
+                                </label><br/>
+                                <label>Comment text<br/>
+                                    <textarea rows={3} value={selected.comment_tex || ""} onChange={(e) => setSelected({ ...selected, comment_text: e.target.value })}/>
+                                </label><br/>
+                                <label>Comment image (URL)<br/>
+                                    <input value={selected.comment_image_url || ""} onChange={(e) => setSelected({ ...selected, comment_image_url: e.target.value })}/>
+                                </label>
+                                <br/>
+                                <label>Upload comment image<br/>
+                                    <input type="file" onChange={onUploadCommentImage} />
+                                </label>
+                                <br/>
+                                <label>Image (URL)<br/>
+                                    <input value={selected.image_url || ""} onChange={(e) => setSelected({ ...selected, image_url: e.target.value })}/>
+                                </label>
+                                <br/>
+                                <label>Upload image<br/>
+                                    <input type="file" onChange={onUploadImage} />
+                                </label>
+                                <br/>
+                                <label>Order (число)<br/>
+                                    <input type="number" value={selected.order || 0} onChange={(e) => setSelected({ ...selected, order: Number(e.target.value) })}/>
+                                </label><br/>
+                                <div style={{ marginTop: 10 }}>
+                                    <button onClick={onSave}>Сохранить</button>
+                                </div>
+                            </>
+                        )}
+                    </div>
+                </div>
+
+                <div style={{flex: 1}}>
                     <hr/>
                     <h3>История семьи Антипиных</h3>
                     <textarea rows={10} style={{ width: '100%' }} value={singleText} onChange={(e) => setSingleText(e.target.value)} />
                     <div style={{ marginTop: 8 }}>
                         <button onClick={saveSingleText}>Сохранить блок</button>
-                        </div>
+                    </div>
                     <hr/>
                     <h3>Footer (read-only)</h3>
                     <div dangerouslySetInnerHTML={{__html: footer?.html || ""}} />
                 </div>
+            </div>
         </div>
     );
 }
