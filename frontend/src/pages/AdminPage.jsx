@@ -278,7 +278,7 @@ export default function AdminPage() {
                 </div>
             </div>
 
-            <div style={{flex: 1}}>
+            <div style={{padding: "20px", maxWidth: 900, margin: "0 auto", flex: 1}}>
                     <hr/>
                     <h3>История семьи Антипиных</h3>
                     <textarea rows={10} style={{ width: '100%' }} value={singleText} onChange={(e) => setSingleText(e.target.value)} />
