@@ -1,9 +1,32 @@
 import React, { useMemo } from "react";
-import { DndContext, closestCenter, useDraggable, useDroppable, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
+import {
+    DndContext,
+    closestCenter,
+    useDraggable,
+    useDroppable,
+    MouseSensor,
+    useSensor,
+    useSensors,
+} from "@dnd-kit/core";
 import { buildTree } from "../../utils/buildTree";
 import { updateNode } from "../../api";
 import styles from "./TreeEditor.module.css";
 
+function DropZone({ id, depth }) {
+    const { setNodeRef, isOver } = useDroppable({ id });
+    return (
+        <div
+            ref={setNodeRef}
+            className={styles.dropZone}
+            style={{
+                height: 6,
+                marginLeft: depth * 20,
+                background: isOver ? "rgba(0,170,255,0.18)" : "transparent",
+                transition: "background 0.08s ease",
+            }}
+        />
+    );
+}
 
 function DraggableNode({ node, depth = 0, onSelect }) {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -11,26 +34,22 @@ function DraggableNode({ node, depth = 0, onSelect }) {
         data: { node },
     });
 
-    const { setNodeRef: setDropRef, isOver } = useDroppable({
-        id: node.id,
-        data: { node },
-    });
-
     const style = {
         transform: transform
-        ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
-        : undefined,
+            ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
+            : undefined,
         marginLeft: depth * 20,
-        border: isOver ? "1px dashed #00aaff" : "1px solid transparent",
         padding: "4px 6px",
-        background: isOver ? "rgba(0,170,255,0.05)" : "transparent",
         borderRadius: 4,
         cursor: "grab",
-        transition: "background 0.15s ease",
+        transition: "background 0.12s ease",
+        userSelect: "none",
     };
 
     return (
-        <div ref={setDropRef}>
+        <div>
+            <DropZone id={`before-${node.id}`} depth={depth} />
+
             <div
                 ref={setNodeRef}
                 {...listeners}
@@ -41,85 +60,104 @@ function DraggableNode({ node, depth = 0, onSelect }) {
                 <span className={styles.title}>{node.title || "(без названия)"}</span>
             </div>
 
+            <DropZone id={`inside-${node.id}`} depth={depth + 1} />
+
             {node.children?.map((ch) => (
-                <DraggableNode
-                key={ch.id}
-                node={ch}
-                depth={depth + 1}
-                onSelect={onSelect}
-                />
+                <DraggableNode key={ch.id} node={ch} depth={depth + 1} onSelect={onSelect} />
             ))}
+
+            <DropZone id={`after-${node.id}`} depth={depth} />
         </div>
     );
 }
 
+function assignPositions(itemsArr, parentId) {
+    const group = itemsArr
+        .filter((i) => (i.parent_id || null) === (parentId || null))
+        .sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
+    group.forEach((item, idx) => {
+        item.position = idx;
+        item.parent_id = parentId || null;
+    });
+    return group;
+}
 
 export default function TreeEditor({ items, setItems, onSelect }) {
     const sensors = useSensors(
         useSensor(MouseSensor, {
-            activationConstraint: {
-                distance: 8
-            },
+            activationConstraint: { distance: 8 },
         })
     );
-    
-    const tree = useMemo(() => buildTree(items), [items]);
+
+    const tree = useMemo(() => buildTree(items || []), [items]);
 
     async function handleDragEnd(event) {
         const { active, over } = event;
         if (!over || active.id === over.id) return;
 
-        const dragged = items.find((i) => i.id === active.id);
-        const target = items.find((i) => i.id === over.id);
+        const draggedId = active.id;
+        const overId = over.id;
+        const match = overId.match(/^(before|inside|after)-(.+)$/);
+        if (!match) return;
+
+        const dropType = match[1];
+        const targetId = match[2];
+
+        const dragged = items.find((i) => i.id === draggedId);
+        const target = items.find((i) => i.id === targetId);
         if (!dragged || !target) return;
 
-        const isDescendant = (parentId, childId) => {
-            const child = items.find((i) => i.id === childId);
-            if (!child) return false;
-            if (child.parent_id === parentId) return true;
-            return child.parent_id
-                ? isDescendant(parentId, child.parent_id)
-                : false;
-        };
-        if (isDescendant(dragged.id, target.id)) return;
+        const updated = items.map((i) => ({ ...i })).filter((i) => i.id !== draggedId);
 
-        let newParent = target.parent_id || null;
-        let siblings = items
-            .filter((i) => i.parent_id === newParent)
-            .sort((a, b) => (a.position || 0) - (b.position || 0));
+        let newParent = dragged.parent_id ?? null;
 
-        const draggedIndex = siblings.findIndex((s) => s.id === dragged.id);
-        const targetIndex = siblings.findIndex((s) => s.id === target.id);
-
-        if (dragged.parent_id === target.parent_id) {
-            siblings.splice(draggedIndex, 1);
-            siblings.splice(targetIndex, 0, dragged);
-        } else {
+        if (dropType === "inside") {
             newParent = target.id;
-            siblings = items
-                .filter((i) => i.parent_id === newParent)
-                .sort((a, b) => (a.position || 0) - (b.position || 0));
-            siblings.push(dragged);
+
+            updated.push({ ...dragged, parent_id: newParent });
+        } else {
+            newParent = target.parent_id ?? null;
+            const siblings = updated
+                .filter((i) => (i.parent_id ?? null) === (newParent ?? null))
+                .sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
+
+            const insertIndex = siblings.findIndex((s) => s.id === targetId) + (dropType === "after" ? 1 : 0);
+
+            const draggedCopy = { ...dragged, parent_id: newParent };
+            siblings.splice(insertIndex, 0, draggedCopy);
+
+
+            const others = updated.filter((i) => (i.parent_id ?? null) !== (newParent ?? null));
+            updated.length = 0;
+            others.forEach((o) => updated.push(o));
+            siblings.forEach((s) => updated.push(s));
         }
 
-        const updatedSiblings = siblings.map((s, index) => ({
-            ...s,
-            position: index,
-            parent_id: newParent,
-        }));
 
-        const updatedItems = items.map((i) => {
-            const found = updatedSiblings.find((u) => u.id === i.id);
-            return found ? found : i;
-        });
+        const oldParent = dragged.parent_id ?? null;
+        assignPositions(updated, oldParent);
+        assignPositions(updated, newParent);
 
-        setItems(updatedItems);
+        setItems(updated);
 
-        for (const s of updatedSiblings) {
-            await updateNode(s.id, {
-                position: s.position,
-                parent_id: s.parent_id || null,
-            });
+
+        const toUpdate = items
+        .map((orig) => {
+            const cur = updated.find((u) => u.id === orig.id);
+            if (!cur) return null;
+            if ((cur.parent_id ?? null) !== (orig.parent_id ?? null) || (cur.position ?? 0) !== (orig.position ?? 0)) {
+                return { id: cur.id, parent_id: cur.parent_id ?? null, position: cur.position ?? 0 };
+            }
+            return null;
+        })
+        .filter(Boolean);
+
+        for (const u of toUpdate) {
+            try {
+                await updateNode(u.id, { parent_id: u.parent_id, position: u.position });
+            } catch (e) {
+                console.error("updateNode error", u, e);
+            }
         }
     }
 
@@ -133,4 +171,3 @@ export default function TreeEditor({ items, setItems, onSelect }) {
         </DndContext>
     );
 }
-

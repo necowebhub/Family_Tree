@@ -9,3 +9,13 @@
     color: #ddd;
     font-size: 15px;
 }
+
+.dropZone {
+    height: 6px;
+    background: transparent;
+    transition: background 0.15s ease;
+}
+
+.dropZone:hover {
+    background: rgba(0, 170, 255, 0.15);
+}
