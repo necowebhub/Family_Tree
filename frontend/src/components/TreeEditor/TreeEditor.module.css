@@ -19,3 +19,25 @@
 .dropZone:hover {
     background: rgba(0, 170, 255, 0.15);
 }
+
+.actions {
+    display: flex;
+    gap: 4px;
+}
+
+.iconBtn {
+    border: none;
+    background: transparent;
+    color: #bbb;
+    cursor: pointer;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.iconBtn:hover {
+    color: #00aaff;
+}
+
+.iconBtn:active {
+    color: #0077cc;
+}

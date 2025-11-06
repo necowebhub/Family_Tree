@@ -6,7 +6,7 @@ import {
     useDroppable,
     MouseSensor,
     useSensor,
-    useSensors,
+    useSensors
 } from "@dnd-kit/core";
 import { buildTree } from "../../utils/buildTree";
 import { updateNode } from "../../api";
@@ -28,7 +28,7 @@ function DropZone({ id, depth }) {
     );
 }
 
-function DraggableNode({ node, depth = 0, onSelect }) {
+function DraggableNode({ node, depth = 0, onSelect, onAdd, onDelete }) {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: node.id,
         data: { node },
@@ -44,6 +44,9 @@ function DraggableNode({ node, depth = 0, onSelect }) {
         cursor: "grab",
         transition: "background 0.12s ease",
         userSelect: "none",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center"
     };
 
     return (
@@ -58,12 +61,34 @@ function DraggableNode({ node, depth = 0, onSelect }) {
                 onClick={() => onSelect(node)}
             >
                 <span className={styles.title}>{node.title || "(без названия)"}</span>
+                <span className={styles.actions}>
+                    <button 
+                        className={styles.iconBtn} 
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onAdd(node.id);
+                        }}
+                        title="Добавить ребёнка"
+                    >
+                        ➕
+                    </button>
+                    <button 
+                        className={styles.iconBtn}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onDelete(node.id);
+                        }}
+                        title="Удалить элемент"
+                    >
+                        ➖
+                    </button>
+                </span>
             </div>
 
             <DropZone id={`inside-${node.id}`} depth={depth + 1} />
 
             {node.children?.map((ch) => (
-                <DraggableNode key={ch.id} node={ch} depth={depth + 1} onSelect={onSelect} />
+                <DraggableNode key={ch.id} node={ch} depth={depth + 1} onSelect={onSelect} onAdd={onAdd} onDelete={onDelete} />
             ))}
 
             <DropZone id={`after-${node.id}`} depth={depth} />
@@ -82,7 +107,7 @@ function assignPositions(itemsArr, parentId) {
     return group;
 }
 
-export default function TreeEditor({ items, setItems, onSelect }) {
+export default function TreeEditor({ items, setItems, onSelect, onAdd, onDelete }) {
     const sensors = useSensors(
         useSensor(MouseSensor, {
             activationConstraint: { distance: 8 },
@@ -113,7 +138,6 @@ export default function TreeEditor({ items, setItems, onSelect }) {
 
         if (dropType === "inside") {
             newParent = target.id;
-
             updated.push({ ...dragged, parent_id: newParent });
         } else {
             newParent = target.parent_id ?? null;
@@ -165,7 +189,7 @@ export default function TreeEditor({ items, setItems, onSelect }) {
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <div className={styles.treeContainer}>
                 {tree.map((node) => (
-                    <DraggableNode key={node.id} node={node} onSelect={onSelect} />
+                    <DraggableNode key={node.id} node={node} onSelect={onSelect} onAdd={onAdd} onDelete={onDelete} />
                 ))}
             </div>
         </DndContext>
