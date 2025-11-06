@@ -28,7 +28,7 @@ function DropZone({ id, depth }) {
     );
 }
 
-function DraggableNode({ node, depth = 0, onSelect, onAdd, onDelete }) {
+function DraggableNode({ node, depth = 0, onSelect, onAdd, onDelete, isDragging }) {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: node.id,
         data: { node },
@@ -61,28 +61,31 @@ function DraggableNode({ node, depth = 0, onSelect, onAdd, onDelete }) {
                 onClick={() => onSelect(node)}
             >
                 <span className={styles.title}>{node.title || "(без названия)"}</span>
-                <span className={styles.actions}>
-                    <button 
-                        className={styles.iconBtn} 
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onAdd(node.id);
-                        }}
-                        title="Добавить ребёнка"
-                    >
-                        ➕
-                    </button>
-                    <button 
-                        className={styles.iconBtn}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onDelete(node.id);
-                        }}
-                        title="Удалить элемент"
-                    >
-                        ➖
-                    </button>
+
+                {isDragging && (
+                    <span className={styles.actions}>
+                        <button 
+                            className={styles.iconBtn} 
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onAdd(node.id);
+                            }}
+                            title="Добавить ребёнка"
+                        >
+                            ➕
+                        </button>
+                        <button 
+                            className={styles.iconBtn}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onDelete(node.id);
+                            }}
+                            title="Удалить элемент"
+                        >
+                            ➖
+                        </button>
                 </span>
+            )}
             </div>
 
             <DropZone id={`inside-${node.id}`} depth={depth + 1} />
