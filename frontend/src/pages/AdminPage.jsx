@@ -2,6 +2,7 @@ import React, { Children, useEffect, useState } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import TreeEditor from "../components/TreeEditor/TreeEditor"
 import { getTree, createNode, updateNode, deleteNode, getSingleText, updateSingleText, uploadFile, getFooter, login, logout, onAuthChange, resetPassword, changePassword } from "../api";
+import { buildTree } from "../utils/buildTree";
 import { useNavigate } from "react-router-dom";
 
 export default function AdminPage() {
@@ -27,43 +28,9 @@ export default function AdminPage() {
         return () => unsub();
     },[]);
 
-    function buildOrderedTree(items) {
-        const map = {};
-        const roots = [];
-
-        items.forEach((item) => {
-            map[item.id] = { ...item, children: [] };
-        });
-
-        items.forEach((item) => {
-            if (item.parent_id && map[item.parent_id]) {
-                map[item.parent_id].children.push(map[item.id]);
-            } else {
-                roots.push(map[item.id]);
-            }
-        });
-
-        const sortRecursively = (nodes) => {
-            nodes.sort((a, b) => (a.order || 0) - (b.order || 0));
-            nodes.forEach((n) => sortRecursively(n.children));
-        };
-        sortRecursively(roots);
-
-        const result = [];
-        const flatten = (nodes, depth = 0) => {
-            nodes.forEach((n) => {
-                result.push({ ...n, depth });
-                if (n.children.length > 0) flatten(n.children, depth + 1);
-            })
-        };
-        flatten(roots);
-
-        return result;
-    }
-
     async function refresh() {
-        const tree = await getTree();
-        const sortedTree = buildOrderedTree(tree);
+        const items = await getTree();
+        const sortedTree = buildTree(items);
         setItems(sortedTree);
     }
 
