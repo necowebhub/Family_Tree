@@ -84,14 +84,14 @@ function DraggableNode({ node, depth = 0, onSelect, onAdd, onDelete, isDragging 
                         >
                             ➖
                         </button>
-                </span>
-            )}
+                    </span>
+                )}
             </div>
 
             <DropZone id={`inside-${node.id}`} depth={depth + 1} />
 
             {node.children?.map((ch) => (
-                <DraggableNode key={ch.id} node={ch} depth={depth + 1} onSelect={onSelect} onAdd={onAdd} onDelete={onDelete} />
+                <DraggableNode key={ch.id} node={ch} depth={depth + 1} onSelect={onSelect} onAdd={onAdd} onDelete={onDelete} isDragging={isDragging} />
             ))}
 
             <DropZone id={`after-${node.id}`} depth={depth} />
@@ -111,6 +111,8 @@ function assignPositions(itemsArr, parentId) {
 }
 
 export default function TreeEditor({ items, setItems, onSelect, onAdd, onDelete }) {
+    const [isDragging, setIsDragging] = useState(false);
+
     const sensors = useSensors(
         useSensor(MouseSensor, {
             activationConstraint: { distance: 8 },
@@ -119,7 +121,13 @@ export default function TreeEditor({ items, setItems, onSelect, onAdd, onDelete 
 
     const tree = useMemo(() => buildTree(items || []), [items]);
 
+    async function handleDragStart() {
+        setIsDragging(true);
+    }
+
     async function handleDragEnd(event) {
+        setIsDragging(false);
+
         const { active, over } = event;
         if (!over || active.id === over.id) return;
 
@@ -169,15 +177,17 @@ export default function TreeEditor({ items, setItems, onSelect, onAdd, onDelete 
 
 
         const toUpdate = items
-        .map((orig) => {
-            const cur = updated.find((u) => u.id === orig.id);
-            if (!cur) return null;
-            if ((cur.parent_id ?? null) !== (orig.parent_id ?? null) || (cur.position ?? 0) !== (orig.position ?? 0)) {
-                return { id: cur.id, parent_id: cur.parent_id ?? null, position: cur.position ?? 0 };
-            }
-            return null;
-        })
-        .filter(Boolean);
+            .map((orig) => {
+                const cur = updated.find((u) => u.id === orig.id);
+                if (!cur) return null;
+                if (
+                    (cur.parent_id ?? null) !== (orig.parent_id ?? null) || (cur.position ?? 0) !== (orig.position ?? 0)
+                ) {
+                    return { id: cur.id, parent_id: cur.parent_id ?? null, position: cur.position ?? 0 };
+                }
+                return null;
+            })
+            .filter(Boolean);
 
         for (const u of toUpdate) {
             try {
@@ -189,10 +199,10 @@ export default function TreeEditor({ items, setItems, onSelect, onAdd, onDelete 
     }
 
     return (
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
             <div className={styles.treeContainer}>
                 {tree.map((node) => (
-                    <DraggableNode key={node.id} node={node} onSelect={onSelect} onAdd={onAdd} onDelete={onDelete} />
+                    <DraggableNode key={node.id} node={node} onSelect={onSelect} onAdd={onAdd} onDelete={onDelete} isDragging={isDragging} />
                 ))}
             </div>
         </DndContext>
