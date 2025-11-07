@@ -126,14 +126,14 @@ export default function AdminPage() {
             content: selected.content,
             comment_text: selected.comment_text,
             image_url: selected.image_url,
-            parent_id: selected.parent_id || null,
-            position: selected.position ?? 0,
         });
         await refresh();
         alert("Сохранено");
     }
 
     async function onDelete(id) {
+        console.log("Удаление элемента:", id);
+
         const toDelete = [id];
         const all = [...items];
 
@@ -151,6 +151,7 @@ export default function AdminPage() {
         if (!confirm(confirmMsg)) return;
 
         for (const delId of toDelete) {
+            console.log("Удаляем Firestore документ:", delId);
             await deleteNode(delId);
         }
 
@@ -245,19 +246,14 @@ export default function AdminPage() {
                             <>
                                 <label>Title<br/>
                                     <input value={selected.title || ""} onChange={(e) => setSelected({ ...selected, title: e.target.value })}/>
-                                </label><br/>
-                                <label>Content (HTML/markdown)<br/>
-                                    <textarea rows={6} value={selected.content || ""} onChange={(e) => setSelected({ ...selected, content: e.target.value })}/>
-                                </label><br/>
-                                <label>Comment text<br/>
-                                    <textarea rows={3} value={selected.comment_tex || ""} onChange={(e) => setSelected({ ...selected, comment_text: e.target.value })}/>
-                                </label><br/>
-                                <label>Comment image (URL)<br/>
-                                    <input value={selected.comment_image_url || ""} onChange={(e) => setSelected({ ...selected, comment_image_url: e.target.value })}/>
                                 </label>
                                 <br/>
-                                <label>Upload comment image<br/>
-                                    <input type="file" onChange={onUploadCommentImage} />
+                                <label>Content (HTML/markdown)<br/>
+                                    <textarea rows={6} value={selected.content || ""} onChange={(e) => setSelected({ ...selected, content: e.target.value })}/>
+                                </label>
+                                <br/>
+                                <label>Comment text<br/>
+                                    <textarea rows={3} value={selected.comment_tex || ""} onChange={(e) => setSelected({ ...selected, comment_text: e.target.value })}/>
                                 </label>
                                 <br/>
                                 <label>Image (URL)<br/>
@@ -268,9 +264,6 @@ export default function AdminPage() {
                                     <input type="file" onChange={onUploadImage} />
                                 </label>
                                 <br/>
-                                <label>Order (число)<br/>
-                                    <input type="number" value={selected.order || 0} onChange={(e) => setSelected({ ...selected, order: Number(e.target.value) })}/>
-                                </label><br/>
                                 <div style={{ marginTop: 10 }}>
                                     <button onClick={onSave}>Сохранить</button>
                                 </div>
