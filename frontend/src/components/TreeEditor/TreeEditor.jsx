@@ -150,28 +150,44 @@ export default function TreeEditor({ items, setItems, onSelect, onAdd, onDelete 
     const target = items.find((i) => i.id === targetId);
     if (!dragged || !target) return;
 
+    /* 🛑 1. Проверка: нельзя вложить в самого себя или своего потомка */
+    const isDescendant = (childId, parentId) => {
+        const children = items.filter((i) => i.parent_id === parentId);
+        for (const ch of children) {
+        if (ch.id === childId) return true;
+        if (isDescendant(childId, ch.id)) return true;
+        }
+        return false;
+    };
+
+    if (targetId === draggedId || isDescendant(targetId, draggedId)) {
+        alert("❌ Нельзя сделать элемент потомком самого себя или своего ребёнка.");
+        return;
+    }
+
+    /* --- 2. Основная логика перестановки --- */
     const updated = items.map((i) => ({ ...i })).filter((i) => i.id !== draggedId);
 
     let newParent = dragged.parent_id ?? null;
 
     if (dropType === "inside") {
-      newParent = target.id;
-      updated.push({ ...dragged, parent_id: newParent });
+        newParent = target.id;
+        updated.push({ ...dragged, parent_id: newParent });
     } else {
-      newParent = target.parent_id ?? null;
-      const siblings = updated
+        newParent = target.parent_id ?? null;
+        const siblings = updated
         .filter((i) => (i.parent_id ?? null) === (newParent ?? null))
         .sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
 
-      const insertIndex =
+        const insertIndex =
         siblings.findIndex((s) => s.id === targetId) + (dropType === "after" ? 1 : 0);
-      const draggedCopy = { ...dragged, parent_id: newParent };
-      siblings.splice(insertIndex, 0, draggedCopy);
+        const draggedCopy = { ...dragged, parent_id: newParent };
+        siblings.splice(insertIndex, 0, draggedCopy);
 
-      const others = updated.filter((i) => (i.parent_id ?? null) !== (newParent ?? null));
-      updated.length = 0;
-      others.forEach((o) => updated.push(o));
-      siblings.forEach((s) => updated.push(s));
+        const others = updated.filter((i) => (i.parent_id ?? null) !== (newParent ?? null));
+        updated.length = 0;
+        others.forEach((o) => updated.push(o));
+        siblings.forEach((s) => updated.push(s));
     }
 
     const oldParent = dragged.parent_id ?? null;
@@ -181,27 +197,28 @@ export default function TreeEditor({ items, setItems, onSelect, onAdd, onDelete 
     setItems(updated);
 
     const toUpdate = items
-      .map((orig) => {
+        .map((orig) => {
         const cur = updated.find((u) => u.id === orig.id);
         if (!cur) return null;
         if (
-          (cur.parent_id ?? null) !== (orig.parent_id ?? null) ||
-          (cur.position ?? 0) !== (orig.position ?? 0)
+            (cur.parent_id ?? null) !== (orig.parent_id ?? null) ||
+            (cur.position ?? 0) !== (orig.position ?? 0)
         ) {
-          return { id: cur.id, parent_id: cur.parent_id ?? null, position: cur.position ?? 0 };
+            return { id: cur.id, parent_id: cur.parent_id ?? null, position: cur.position ?? 0 };
         }
         return null;
-      })
-      .filter(Boolean);
+        })
+        .filter(Boolean);
 
     for (const u of toUpdate) {
-      try {
+        try {
         await updateNode(u.id, { parent_id: u.parent_id, position: u.position });
-      } catch (e) {
+        } catch (e) {
         console.error("updateNode error", u, e);
-      }
+        }
     }
   }
+
 
   return (
     <DndContext
