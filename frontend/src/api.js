@@ -41,7 +41,15 @@ export async function updateNode(id, data) {
 }
 
 export async function deleteNode(id) {
-    await deleteDoc(doc(db, "components", id));
+    console.log("[deleteNode] попытка удалить документ:", id);
+    const ref = doc(db, "components", id);
+    await deleteDoc(ref);
+    const check = await getDoc(ref);
+    if (check.exists()) {
+        console.warn("⚠️ Документ не удалился:", id);
+    } else {
+        console.log("✅ Документ успешно удалён:", id);
+    }
     return { deletedId: id };
 }
 
