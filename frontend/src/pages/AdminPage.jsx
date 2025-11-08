@@ -17,15 +17,13 @@ import {
     changePassword,
 } from "../api";
 
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import ImageUploader from "quill-image-uploader/dist/quill.imageUploader.min.js";
-import Quill from "quill";
 
-import { list } from "firebase/storage";
-import firebase from "firebase/compat/app";
+import ImageUploader from "quill-image-uploader";
 
 Quill.register("modules/imageUploader", ImageUploader);
+
 
 export default function AdminPage() {
     const [items, setItems] = useState([]);
@@ -342,10 +340,9 @@ export default function AdminPage() {
                                 </div>
                             </>
                         )}
-                        <hr />
                     </div>
                 </div>
-
+                <hr />
                 <div style={{ marginBottom: 20 }}>
                     <h3>История семьи Антипиных</h3>
                     <ReactQuill 
@@ -361,11 +358,18 @@ export default function AdminPage() {
                                 ["clean"]
                             ],
                             ImageUploader: {
-                                upload: async (file) => {
-                                    const res = await uploadFile(file);
-                                    return res.url;
-                                }
-                            }
+                                upload: (file) => {
+                                    return new Promise(async (resolve, reject) => {
+                                        try {
+                                            const res = await uploadFile(file);
+                                            resolve(res.url);
+                                        } catch (err) {
+                                            console.error("Ошибка загрузки:", err);
+                                            reject("Ошибка загрузки изображения");
+                                        }
+                                    });
+                                },
+                            },
                         }}
                         formats={[
                             "header",
@@ -378,10 +382,10 @@ export default function AdminPage() {
                             "link",
                             "image"
                         ]}
+                        style={{ height: "400px", marginBottom: "20px" }}
                     />
-                    <div style={{ marginTop: 8 }}>
-                        <button onClick={saveSingleText} style={{ marginTop: 10 }}>Сохранить блок</button>
-                    </div>
+                    
+                    <button onClick={saveSingleText} style={{ marginTop: 10 }}>Сохранить блок</button>
                     <hr />
                     <h3>Footer (read-only)</h3>
                     <div dangerouslySetInnerHTML={{ __html: footer?.html || "" }} />
