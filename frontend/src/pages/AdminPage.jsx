@@ -17,6 +17,15 @@ import {
     changePassword,
 } from "../api";
 
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import Quill from "quill";
+import ImageUploader from "quill-image-uploader";
+import { list } from "firebase/storage";
+import firebase from "firebase/compat/app";
+
+Quill.register("modules/imageUploader", ImageUploader);
+
 export default function AdminPage() {
     const [items, setItems] = useState([]);
     const [selected, setSelected] = useState(null);
@@ -332,20 +341,45 @@ export default function AdminPage() {
                                 </div>
                             </>
                         )}
+                        <hr />
                     </div>
                 </div>
 
-                <div style={{ flex: 1 }}>
-                    <hr />
+                <div style={{ marginBottom: 20 }}>
                     <h3>История семьи Антипиных</h3>
-                    <textarea
-                        rows={10}
-                        style={{ width: "100%" }}
+                    <ReactQuill 
                         value={singleText}
-                        onChange={(e) => setSingleText(e.target.value)}
+                        onChange={setSingleText}
+                        theme="snow"
+                        modules={{
+                            toolbar: [
+                                [{ header: [1, 2, 3, false] }],
+                                ["bold", "italic", "underline", "strike"],
+                                [{ list: "ordered" }, { list: "bullet" }],
+                                ["link", "image"],
+                                ["clean"]
+                            ],
+                            ImageUploader: {
+                                upload: async (file) => {
+                                    const res = await uploadFile(file);
+                                    return res.url;
+                                }
+                            }
+                        }}
+                        formats={[
+                            "header",
+                            "bold",
+                            "italic",
+                            "underline",
+                            "strike",
+                            "list",
+                            "bullet",
+                            "link",
+                            "image"
+                        ]}
                     />
                     <div style={{ marginTop: 8 }}>
-                        <button onClick={saveSingleText}>Сохранить блок</button>
+                        <button onClick={saveSingleText} style={{ marginTop: 10 }}>Сохранить блок</button>
                     </div>
                     <hr />
                     <h3>Footer (read-only)</h3>
