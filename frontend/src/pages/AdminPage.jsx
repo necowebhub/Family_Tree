@@ -19,8 +19,9 @@ import {
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import ImageUploader from "quill-image-uploader/dist/quill.imageUploader.min.js";
 import Quill from "quill";
-import ImageUploader from "quill-image-uploader";
+
 import { list } from "firebase/storage";
 import firebase from "firebase/compat/app";
 
