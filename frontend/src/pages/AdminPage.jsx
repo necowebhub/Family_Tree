@@ -346,39 +346,13 @@ export default function AdminPage() {
                         onChange={setSingleText}
                         theme="snow"
                         modules={{
-                            toolbar: {
-                                container: [
-                                    [{ header: [1, 2, 3, false] }],
-                                    ["bold", "italic", "underline", "strike"],
-                                    [{ list: "ordered" }, { list: "bullet" }],
-                                    ["link", "image"],
-                                    ["clean"]
-                                ],
-                                handlers: {
-                                    image: async function () {
-                                        const input = document.createElement("input");
-                                        input.setAttribute("type", "file");
-                                        input.setAttribute("accept", "image/*");
-                                        input.click();
-
-                                        input.onchange = async () => {
-                                            const file = input.files[0];
-                                            if (!file) return;
-
-                                            const quill = this.quill;
-                                            const range = quill.getSelection(true);
-
-                                            try {
-                                                const res = await uploadFile(file);
-                                                quill.insertEmbed(range.index, "image", res.url);
-                                            } catch (err) {
-                                                console.error("Ошибка загрузки:", err);
-                                                alert("Не удалось загрузить изображение");
-                                            }
-                                        };
-                                    },
-                                },
-                            },
+                            toolbar: [
+                                [{ header: [1, 2, 3, false] }],
+                                ["bold", "italic", "underline", "strike"],
+                                [{ list: "ordered" }, { list: "bullet" }],
+                                ["link", "image"],
+                                ["clean"]
+                            ],
                         }}
                         formats={[
                             "header",
@@ -391,7 +365,7 @@ export default function AdminPage() {
                             "link",
                             "image"
                         ]}
-                        style={{ height: "400px", marginBottom: "20px" }}
+                        style={{ height: "400px", background: "white", marginBottom: "20px" }}
                     />
                     
                     <button onClick={saveSingleText} style={{ marginTop: 10 }}>Сохранить блок</button>
