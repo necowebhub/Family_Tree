@@ -20,10 +20,6 @@ import {
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-import ImageUploader from "quill-image-uploader";
-
-Quill.register("modules/imageUploader", ImageUploader);
-
 
 export default function AdminPage() {
     const [items, setItems] = useState([]);
@@ -350,24 +346,37 @@ export default function AdminPage() {
                         onChange={setSingleText}
                         theme="snow"
                         modules={{
-                            toolbar: [
-                                [{ header: [1, 2, 3, false] }],
-                                ["bold", "italic", "underline", "strike"],
-                                [{ list: "ordered" }, { list: "bullet" }],
-                                ["link", "image"],
-                                ["clean"]
-                            ],
-                            ImageUploader: {
-                                upload: (file) => {
-                                    return new Promise(async (resolve, reject) => {
-                                        try {
-                                            const res = await uploadFile(file);
-                                            resolve(res.url);
-                                        } catch (err) {
-                                            console.error("Ошибка загрузки:", err);
-                                            reject("Ошибка загрузки изображения");
-                                        }
-                                    });
+                            toolbar: {
+                                container: [
+                                    [{ header: [1, 2, 3, false] }],
+                                    ["bold", "italic", "underline", "strike"],
+                                    [{ list: "ordered" }, { list: "bullet" }],
+                                    ["link", "image"],
+                                    ["clean"]
+                                ],
+                                handlers: {
+                                    image: async function () {
+                                        const input = document.createElement("input");
+                                        input.setAttribute("type", "file");
+                                        input.setAttribute("accept", "image/*");
+                                        input.click();
+
+                                        input.onchange = async () => {
+                                            const file = input.files[0];
+                                            if (!file) return;
+
+                                            const quill = this.quill;
+                                            const range = quill.getSelection(true);
+
+                                            try {
+                                                const res = await uploadFile(file);
+                                                quill.insertEmbed(range.index, "image", res.url);
+                                            } catch (err) {
+                                                console.error("Ошибка загрузки:", err);
+                                                alert("Не удалось загрузить изображение");
+                                            }
+                                        };
+                                    },
                                 },
                             },
                         }}
