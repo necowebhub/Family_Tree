@@ -365,7 +365,7 @@ export default function AdminPage() {
                             "link",
                             "image"
                         ]}
-                        style={{ height: "400px", background: "white", marginBottom: "20px" }}
+                        style={{ minHeight: 300, background: "white", marginBottom: 20 }}
                     />
                     
                     <button onClick={saveSingleText} style={{ marginTop: 10 }}>Сохранить блок</button>
