@@ -349,6 +349,7 @@ export default function AdminPage() {
                             toolbar: [
                                 [{ header: [1, 2, 3, false] }],
                                 ["bold", "italic", "underline", "strike"],
+                                [{ align: [] }],
                                 [{ list: "ordered" }, { list: "bullet" }],
                                 ["link", "image"],
                                 ["clean"]
@@ -363,7 +364,8 @@ export default function AdminPage() {
                             "list",
                             "bullet",
                             "link",
-                            "image"
+                            "image",
+                            "align"
                         ]}
                         style={{ minHeight: 300, background: "white", marginBottom: 20 }}
                     />
