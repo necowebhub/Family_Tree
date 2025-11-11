@@ -17,3 +17,36 @@ a {
     color:inherit; 
 }
 
+.ql-align-left {
+    text-align: left;
+}
+
+.ql-align-center {
+    text-align: center;
+}
+
+.ql-align-right {
+    text-align: right;
+}
+
+.ql-align-justify {
+    text-align: justify;
+}
+
+.ql-editor img.ql-align-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ql-editor img.ql-align-right {
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.ql-editor img.ql-align-left {
+    display: block;
+    margin-left: 0;
+    margin-right: auto;
+}
