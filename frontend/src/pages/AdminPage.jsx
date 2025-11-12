@@ -371,6 +371,7 @@ export default function AdminPage() {
                     />
                     
                     <button onClick={saveSingleText} style={{ marginTop: 10 }}>Сохранить блок</button>
+                    <button onClick={onDelete("item_4")} style={{ marginTop: 10 }}>Удалить</button>
                     <hr />
                     <h3>Footer (read-only)</h3>
                     <div dangerouslySetInnerHTML={{ __html: footer?.html || "" }} />
