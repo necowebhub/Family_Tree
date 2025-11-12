@@ -140,7 +140,7 @@ export default function AdminPage() {
             try {
                 await deleteNode(delId);
             } catch (e) {
-                console.error("Ошибка удаления Firestore:", delId, e);
+                console.error("Ошибка удаления Firestore", delId, e);
             }
         }
 
