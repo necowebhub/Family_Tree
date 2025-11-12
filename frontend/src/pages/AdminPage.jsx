@@ -122,7 +122,7 @@ export default function AdminPage() {
         try {
             await deleteNode(toDelete);
         } catch (e) {
-            console.error("Ошибка удаления Firestore", delId, e);
+            console.error("Ошибка удаления Firestore", toDelete, e);
         }
         setSelected(null);
         await refresh();
