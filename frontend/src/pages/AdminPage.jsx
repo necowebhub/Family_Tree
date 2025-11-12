@@ -117,12 +117,11 @@ export default function AdminPage() {
     }
 
     async function onDeleteTest(id) {
-        const toDelete = [id];
-        setItems((prev) => prev.filter((i) => !toDelete.includes(i.id)));
+        setItems((prev) => prev.filter((i) => i.id != id));
         try {
-            await deleteNode(toDelete);
+            await deleteNode(id);
         } catch (e) {
-            console.error("Ошибка удаления Firestore", toDelete, e);
+            console.error("Ошибка удаления Firestore", id, e);
         }
         setSelected(null);
         await refresh();
