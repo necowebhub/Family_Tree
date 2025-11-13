@@ -22,7 +22,7 @@ function DropZone({ id, depth }) {
       style={{
         height: 6,
         marginLeft: depth * 20,
-        background: isOver ? "rgba(0,170,255,0.18)" : "transparent",
+        background: isOver ? "rgba(255, 255, 255, 1)" : "transparent",
         transition: "background 0.08s ease",
       }}
     />

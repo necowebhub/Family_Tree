@@ -367,13 +367,15 @@ export default function AdminPage() {
                             "image",
                             "align"
                         ]}
-                        style={{ minHeight: 300, background: "white", marginBottom: 20 }}
+                        style={{ background: "white", marginBottom: 20 }}
                     />
                     
                     <button onClick={saveSingleText} style={{ marginTop: 10 }}>Сохранить блок</button>
                     <hr />
-                    <h3>Footer (read-only)</h3>
-                    <div dangerouslySetInnerHTML={{ __html: footer?.html || "" }} />
+                    <div style={{ padding: 20 }}>
+                        <h3>Footer (read-only)</h3>
+                        <div dangerouslySetInnerHTML={{ __html: footer?.html || "" }} />
+                    </div>
                 </div>
             </div>
         </div>
