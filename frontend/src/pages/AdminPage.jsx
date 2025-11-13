@@ -339,38 +339,40 @@ export default function AdminPage() {
                     </div>
                 </div>
                 <hr />
-                <div style={{ marginBottom: 20, padding: 20 }}>
-                    <h3>История семьи Антипиных</h3>
-                    <ReactQuill 
-                        value={singleText}
-                        onChange={setSingleText}
-                        theme="snow"
-                        modules={{
-                            toolbar: [
-                                [{ header: [1, 2, 3, false] }],
-                                ["bold", "italic", "underline", "strike"],
-                                [{ align: [] }],
-                                [{ list: "ordered" }, { list: "bullet" }],
-                                ["link", "image"],
-                                ["clean"]
-                            ],
-                        }}
-                        formats={[
-                            "header",
-                            "bold",
-                            "italic",
-                            "underline",
-                            "strike",
-                            "list",
-                            "bullet",
-                            "link",
-                            "image",
-                            "align"
-                        ]}
-                        style={{ background: "white", marginBottom: 20 }}
-                    />
-                    
-                    <button onClick={saveSingleText} style={{ marginTop: 10 }}>Сохранить блок</button>
+                <div style={{ marginBottom: 20 }}>
+                    <div style={{ padding: 20 }}>
+                        <h3>История семьи Антипиных</h3>
+                        <ReactQuill 
+                            value={singleText}
+                            onChange={setSingleText}
+                            theme="snow"
+                            modules={{
+                                toolbar: [
+                                    [{ header: [1, 2, 3, false] }],
+                                    ["bold", "italic", "underline", "strike"],
+                                    [{ align: [] }],
+                                    [{ list: "ordered" }, { list: "bullet" }],
+                                    ["link", "image"],
+                                    ["clean"]
+                                ],
+                            }}
+                            formats={[
+                                "header",
+                                "bold",
+                                "italic",
+                                "underline",
+                                "strike",
+                                "list",
+                                "bullet",
+                                "link",
+                                "image",
+                                "align"
+                            ]}
+                            style={{ background: "white", marginBottom: 20 }}
+                        />
+                        
+                        <button onClick={saveSingleText} style={{ marginTop: 10 }}>Сохранить блок</button>
+                    </div>
                     <hr />
                     <div style={{ padding: 20 }}>
                         <h3>Footer (read-only)</h3>
