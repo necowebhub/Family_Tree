@@ -1,9 +1,8 @@
 import { auth, db, storage } from "./firebase";
-import { collection, doc, getDocs, getDoc, addDoc, updateDoc, deleteDoc, setDoc } from "firebase/firestore";
+import { collection, doc, query, where, getDocs, getDoc, addDoc, updateDoc, deleteDoc, setDoc } from "firebase/firestore";
 import { onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, updatePassword, signOut } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-// TREE
 export async function getTree() {
     const snapshot = await getDocs(collection(db, "components"));
     return snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -42,15 +41,29 @@ export async function updateNode(id, data) {
 
 export async function deleteNode(id) {
     console.log("[deleteNode] попытка удалить документ:", id);
-    const ref = doc(db, "components", id);
-    await deleteDoc(ref);
-    const check = await getDoc(ref);
-    if (check.exists()) {
-        console.warn("⚠️ Документ не удалился:", id);
-    } else {
-        console.log("✅ Документ успешно удалён:", id);
+
+    try {
+        const q = query(
+            collection(db, "components"),
+            where("id", "==", id)
+        );
+
+        const querySnapshot = await getDocs(q);
+        
+        if (querySnapshot.empty) {
+            console.log("[deleteNode] документ не найден");
+            return false;
+        }
+
+        const deletePromises = querySnapshot.docs.map(doc => deleteDoc(doc.ref));
+        await Promise.all(deletePromises);
+        
+        console.log("[deleteNode] успешно удалено:", querySnapshot.size);
+        return true;
+    } catch (error) {
+        console.error("[deleteNode] ошибка:", error);
+        throw error;
     }
-    return { deletedId: id };
 }
 
 // SINGLE TEXT BLOCK

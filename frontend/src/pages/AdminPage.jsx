@@ -116,17 +116,6 @@ export default function AdminPage() {
         alert("Сохранено");
     }
 
-    async function onDeleteTest(id) {
-        setItems((prev) => prev.filter((i) => i.id != id));
-        try {
-            await deleteNode(id);
-        } catch (e) {
-            console.error("Ошибка удаления Firestore", id, e);
-        }
-        setSelected(null);
-        await refresh();
-    }
-
     async function onDelete(id) {
         console.log("Удаление элемента:", id);
         const toDelete = [id];
@@ -281,7 +270,7 @@ export default function AdminPage() {
                                 setItems={setItems}
                                 onSelect={setSelected}
                                 onAdd={onAdd}
-                                onDelete={onDeleteTest}
+                                onDelete={onDelete}
                             />
                     </div>
 
