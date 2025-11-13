@@ -1,12 +1,11 @@
 .treeContainer {
     padding: 10px;
     border: 0.5px solid #bebebe;
-    border-radius: 8px;
     background: #ffffff;
 }
 
 .title {
-    color: #000000;
+    color: #222;
     font-size: 15px;
 }
 
