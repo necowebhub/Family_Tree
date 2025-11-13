@@ -339,7 +339,7 @@ export default function AdminPage() {
                     </div>
                 </div>
                 <hr />
-                <div style={{ marginBottom: 20 }}>
+                <div style={{ marginBottom: 20, padding: 20 }}>
                     <h3>История семьи Антипиных</h3>
                     <ReactQuill 
                         value={singleText}
