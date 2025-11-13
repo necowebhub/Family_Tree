@@ -2,7 +2,7 @@
     padding: 10px;
     border: 1px solid #444;
     border-radius: 8px;
-    background: #1a1a1a;
+    background: #ffffff;
 }
 
 .title {
@@ -28,7 +28,7 @@
 .iconBtn {
     border: none;
     background: transparent;
-    color: #bbb;
+    color: #3b3b3b;
     cursor: pointer;
     font-size: 14px;
     transition: color 0.2s;
