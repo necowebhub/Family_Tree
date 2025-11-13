@@ -280,7 +280,7 @@ export default function AdminPage() {
                             <div>Выбери компонент слева</div>
                         ) : (
                             <>
-                                <label>Title
+                                <label>ФИО
                                     <br />
                                     <input
                                         value={selected.title || ""}
@@ -290,18 +290,24 @@ export default function AdminPage() {
                                     />
                                 </label>
                                 <br />
-                                <label>Content (HTML/markdown)
-                                    <br />
-                                    <textarea
-                                        rows={6}
-                                        value={selected.content || ""}
-                                        onChange={(e) =>
-                                            setSelected({ ...selected, content: e.target.value })
-                                        }
-                                    />
+                                <label>Дни жизни
+                                        <br />
+                                        <input 
+                                            type="date"
+                                            value={selected.birthday || ""}
+                                            onChange={(e) => 
+                                                setSelected({ ...selected, birthday: e.target.value })
+                                            }
+                                        /> - 
+                                        <input type="date"
+                                            value={selected.birthday || ""}
+                                            onChange={(e) => 
+                                                setSelected({ ...selected, birthday: e.target.value })
+                                            }                                        
+                                        />
                                 </label>
                                 <br />
-                                <label>Comment text
+                                <label>Контент
                                     <br />
                                     <textarea
                                         rows={3}
@@ -310,26 +316,6 @@ export default function AdminPage() {
                                             setSelected({ ...selected, comment_text: e.target.value })
                                         }
                                     />
-                                </label>
-                                <br />
-                                <label>Image (URL)
-                                    <br />
-                                    <input
-                                        value={selected.image_url || ""}
-                                        onChange={(e) =>
-                                            setSelected({ ...selected, image_url: e.target.value })
-                                        }
-                                    />
-                                </label>
-                                <br />
-                                <label>Upload image
-                                    <br />
-                                    <input type="file" onChange={onUploadImage} />
-                                </label>
-                                <br />
-                                <label>Upload comment image
-                                    <br />
-                                    <input type="file" onChange={onUploadCommentImage} />
                                 </label>
                                 <div style={{ marginTop: 10 }}>
                                     <button onClick={onSave}>Сохранить</button>
