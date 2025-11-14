@@ -97,10 +97,9 @@ export default function AdminPage() {
         if (!selected) return;
         await updateNode(selected.id, {
             title: selected.title,
-            content: selected.content,
+            birthday: selected.birthday,
+            deathday: selected.deathday,
             comment_text: selected.comment_text,
-            image_url: selected.image_url,
-            comment_image_url: selected.comment_image_url || "",
         });
         await refresh();
         alert("Сохранено");
