@@ -101,7 +101,10 @@ export default function AdminPage() {
             deathday: selected.deathday,
             comment_text: selected.comment_text,
         });
-        await refresh();
+        setItems((prev) =>
+            prev.map((item) => (item.id === updated.id ? updated : item))
+        );
+        setSelected(updated);
         alert("Сохранено");
     }
 
