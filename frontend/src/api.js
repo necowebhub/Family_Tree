@@ -1,7 +1,18 @@
 import { auth, db, storage } from "./firebase";
-import { collection, doc, query, where, getDocs, getDoc, addDoc, updateDoc, deleteDoc, setDoc } from "firebase/firestore";
+import { 
+    collection, 
+    doc, 
+    query, 
+    where, 
+    getDocs, 
+    getDoc, 
+    addDoc, 
+    updateDoc, 
+    deleteDoc, 
+    setDoc } from "firebase/firestore";
 import { onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, updatePassword, signOut } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 
 export async function getTree() {
     const snapshot = await getDocs(collection(db, "components"));
@@ -20,11 +31,10 @@ export async function createNode(data) {
             : -1;
 
     const docRef = await addDoc(collection(db, "components"), {
-        title: data.title || "Новый элемент",
-        content: data.content || "",
+        title: data.title || "Иванов Иван Иванович",
+        birthday: data.birthday || "",
+        deathday: data.deathday || "",
         comment_text: data.comment_text || "",
-        comment_image_url: data.comment_image_url || "",
-        image_url: data.image_url || "",
         parent_id: data.parent_id || null,
         position: maxPosition + 1, // следующий по порядку
     });
@@ -76,7 +86,6 @@ export async function updateSingleText(data) {
     await setDoc(doc(db, "single_text", "main"), data);
 }
 
-// FOOTER
 export async function getFooter() {
     const snap = await getDoc(doc(db, "footer", "main"));
     return snap.exists() ? snap.data() : { html: "<p>Контакты: example@mail.com</p>" };

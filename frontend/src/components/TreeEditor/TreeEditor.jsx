@@ -62,7 +62,7 @@ function DraggableNode({ node, depth = 0, onSelect, onAdd, onDelete, isDragging 
         style={style}
         onClick={() => onSelect(node)}
       >
-        <span className={styles.title}>{node.title || "(без названия)"}</span>
+        <span className={styles.title}>{node.title || "(без названия)"} ({node.birthday || "не известно"} - {node.deathday || "по сей день"})</span>
 
         {!isDragging && (
           <span className={styles.actions}>

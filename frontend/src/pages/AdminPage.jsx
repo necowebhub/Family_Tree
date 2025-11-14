@@ -8,7 +8,6 @@ import {
     deleteNode,
     getSingleText,
     updateSingleText,
-    uploadFile,
     getFooter,
     login,
     logout,
@@ -82,21 +81,12 @@ export default function AdminPage() {
     }
 
     async function onAdd(parent_id = null) {
-        const siblings = items.filter(
-            (i) => (i.parent_id || null) === (parent_id || null)
-        );
-        const newPosition =
-            siblings.length > 0
-                ? Math.max(...siblings.map((s) => s.position || 0)) + 1
-                : 0;
-
         const node = await createNode({
             parent_id: parent_id || null,
-            title: "Новый элемент",
-            content: "",
+            title: "Иванов Иван Иванович",
+            birthday: "",
+            deathday: "",
             comment_text: "",
-            image_url: "",
-            position: newPosition,
         });
 
         setItems((prev) => [...prev, node]);
@@ -148,24 +138,11 @@ export default function AdminPage() {
         await refresh();
     }
 
-    async function onUploadImage(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        const res = await uploadFile(file);
-        setSelected({ ...selected, image_url: res.url });
-    }
-
-    async function onUploadCommentImage(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        const res = await uploadFile(file);
-        setSelected({ ...selected, comment_image_url: res.url });
-    }
-
     async function saveSingleText() {
         await updateSingleText({ content: singleText });
         alert("Сохранено");
     }
+
 
     if (!user) {
         return (
@@ -298,11 +275,12 @@ export default function AdminPage() {
                                             onChange={(e) => 
                                                 setSelected({ ...selected, birthday: e.target.value })
                                             }
-                                        /> - 
+                                        />
+                                        <span> - </span>
                                         <input type="date"
-                                            value={selected.birthday || ""}
+                                            value={selected.deathday || ""}
                                             onChange={(e) => 
-                                                setSelected({ ...selected, birthday: e.target.value })
+                                                setSelected({ ...selected, deathday: e.target.value })
                                             }                                        
                                         />
                                 </label>
