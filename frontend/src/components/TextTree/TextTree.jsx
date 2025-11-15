@@ -10,7 +10,7 @@ export default function TextTree({ items }) {
     const renderNode = (node, level = 0) => (
         <div key={node.id} className={styles.node} style={{ marginLeft: level * 18 }}>
             <div className={styles.clickable} onClick={() => setModalItem(node)}>
-                <div className={styles.title}>{node.title}</div>
+                <span className={styles.title}>{node.title} ({node.birthday || "не известно"} - {node.deathday || "по сей день"})</span>
             </div>
             {node.children.map(child => renderNode(child, level + 1))}
         </div>
