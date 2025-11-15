@@ -13,7 +13,7 @@ export default function TextTree({ items }) {
                 <span className={styles.title}>
                     {node.title} 
                     {(node.birthday || node.deathday) && (
-                        <> ({node.birthday || "не известно"} - {node.deathday || "по сей день"})</>
+                        <> ({node.birthday || "не известно"} — {node.deathday || "по сей день"})</>
                     )}
                 </span>
             </div>
