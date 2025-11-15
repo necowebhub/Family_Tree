@@ -95,7 +95,7 @@ export default function AdminPage() {
 
     async function onSave() {
         if (!selected) return;
-        await updateNode(selected.id, {
+        const updated = await updateNode(selected.id, {
             title: selected.title,
             birthday: selected.birthday,
             deathday: selected.deathday,

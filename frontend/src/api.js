@@ -36,7 +36,7 @@ export async function createNode(data) {
         deathday: data.deathday || "",
         comment_text: data.comment_text || "",
         parent_id: data.parent_id || null,
-        position: maxPosition + 1, // следующий по порядку
+        position: maxPosition + 1,
     });
 
     const snap = await getDoc(docRef);
