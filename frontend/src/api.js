@@ -50,25 +50,9 @@ export async function updateNode(id, data) {
 }
 
 export async function deleteNode(id) {
-    console.log("[deleteNode] попытка удалить документ:", id);
-
     try {
-        const q = query(
-            collection(db, "components"),
-            where("id", "==", id)
-        );
-
-        const querySnapshot = await getDocs(q);
-        
-        if (querySnapshot.empty) {
-            console.log("[deleteNode] документ не найден");
-            return false;
-        }
-
-        const deletePromises = querySnapshot.docs.map(doc => deleteDoc(doc.ref));
-        await Promise.all(deletePromises);
-        
-        console.log("[deleteNode] успешно удалено:", querySnapshot.size);
+        await deleteDoc(doc(db, "components", id));
+        console.log("Удалено:", id);
         return true;
     } catch (error) {
         console.error("[deleteNode] ошибка:", error);

@@ -4,6 +4,9 @@ import Footer from "../components/Footer/Footer";
 import TextTree from "../components/TextTree/TextTree";
 import { getTree, getSingleText, getFooter } from "../api";
 
+import { Element } from "react-scroll";
+
+
 export default function PublicPage() {
     const [items, setItems] = useState([]);
     const [singleText, setSingleText] = useState("");
@@ -17,19 +20,23 @@ export default function PublicPage() {
 
     return (
         <div>
+            <Element name="top"></Element>
             <Navbar />
             <main style={{padding: "20px", maxWidth: 900, margin: "0 auto"}}>
                 <section style={{marginBottom: 30}}>
                     <h2>Семейное дерево Антипиных</h2>
                     <TextTree items={items} />
                 </section>
-
-                <section style={{marginBottom: 30}}>
-                    <h3>История семьи Антипиных</h3>
-                    <div dangerouslySetInnerHTML={{__html: singleText}} />
-                </section>
+                <Element name="about">
+                    <section style={{marginBottom: 30}}>
+                        <h3>История семьи Антипиных</h3>
+                        <div dangerouslySetInnerHTML={{__html: singleText}} />
+                    </section>
+                </Element>
             </main>
-            <Footer html={footer?.html || ""} />
+            <Element name="contacts">
+                <Footer html={footer?.html || ""} />
+            </Element>
         </div>
     );
 }
