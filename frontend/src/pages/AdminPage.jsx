@@ -186,13 +186,23 @@ export default function AdminPage() {
                                     color: "blue",
                                     cursor: "pointer"
                                 }}
-                            >Забыли пароль?
+                            >
+                                Забыли пароль?
                             </button>
                         </div>
-                        
-                        <Link to="/" style={{ marginTop: 20, color: "blue" }}>
-                            ← Вернуться на главную
-                        </Link>
+                        <div style={{ marginTop: 20 }}>
+                            <button 
+                                onClick={() => (window.location.href = "/")} 
+                                style={{ 
+                                    background: "transparent", 
+                                    border: "none", 
+                                    color: "blue", 
+                                    cursor: "pointer" 
+                                }}
+                            >
+                                ← Вернуться на главную
+                            </button>
+                        </div>
                     </>
                 ) : (
                     <>
