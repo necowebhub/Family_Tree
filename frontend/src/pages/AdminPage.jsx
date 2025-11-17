@@ -189,18 +189,10 @@ export default function AdminPage() {
                             >Забыли пароль?
                             </button>
                         </div>
-                        <div style={{ marginTop: 20 }}>
-                            <Link
-                                to="/"
-                                style={{
-                                    background: "transparent",
-                                    border: "none",
-                                    color: "blue",
-                                    cursor: "pointer"
-                                }}
-                            >Вернуться на главную
-                            </Link>
-                        </div>
+                        
+                        <Link to="/" style={{ marginTop: 20, color: "blue" }}>
+                            ← Вернуться на главную
+                        </Link>
                     </>
                 ) : (
                     <>
