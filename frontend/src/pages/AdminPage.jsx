@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import TreeEditor from "../components/TreeEditor/TreeEditor";
 import {
@@ -187,6 +188,18 @@ export default function AdminPage() {
                                 }}
                             >Забыли пароль?
                             </button>
+                        </div>
+                        <div style={{ marginTop: 20 }}>
+                            <Link
+                                to="/"
+                                style={{
+                                    background: "transparent",
+                                    border: "none",
+                                    color: "blue",
+                                    cursor: "pointer"
+                                }}
+                            >Вернуться на главную
+                            </Link>
                         </div>
                     </>
                 ) : (
