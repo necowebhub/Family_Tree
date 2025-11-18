@@ -266,7 +266,7 @@ export default function AdminPage() {
                 )}
 
                 <div style={{ display: "flex", gap: 20, padding: 20 }}>
-                    <div style={{ flex: 1 }}>
+                    <div className="flex-col" style={{ flex: 1 }}>
                         <h3>Семейное дерево Антипиных</h3>
                             <TreeEditor
                                 items={items}
@@ -277,7 +277,7 @@ export default function AdminPage() {
                             />
                     </div>
 
-                    <div style={{ flex: 1 }}>
+                    <div className="flex-col" style={{ flex: 1 }}>
                         <h3>Редактор выбранного</h3>
                         {!selected ? (
                             <div>Выбери компонент слева</div>
@@ -312,37 +312,38 @@ export default function AdminPage() {
                                 </label>
                                 <br />
                                 <label>Контент</label>
-                                <ReactQuill
-                                    value={selected.comment_text || ""}
-                                    onChange={ value =>
-                                        setSelected({ ...selected, comment_text: value })
-                                    }
-                                    theme="snow"
-                                    modules={{
-                                        toolbar: [
-                                            [{ header: [1, 2, 3, false] }],
-                                            ["bold", "italic", "underline", "strike"],
-                                            [{ align: [] }],
-                                            [{ list: "ordered" }, { list: "bullet" }],
-                                            ["link", "image"],
-                                            ["clean"]
-                                        ],
-                                    }}
-                                    formats={[
-                                        "header",
-                                        "bold",
-                                        "italic",
-                                        "underline",
-                                        "strike",
-                                        "list",
-                                        "bullet",
-                                        "link",
-                                        "image",
-                                        "align"
-                                    ]}
-                                    style={{ background: "white", marginBottom: 20 }}
-                                />
-                                
+                                <div className="editor-wrapper">
+                                    <ReactQuill
+                                        value={selected.comment_text || ""}
+                                        onChange={ value =>
+                                            setSelected({ ...selected, comment_text: value })
+                                        }
+                                        theme="snow"
+                                        modules={{
+                                            toolbar: [
+                                                [{ header: [1, 2, 3, false] }],
+                                                ["bold", "italic", "underline", "strike"],
+                                                [{ align: [] }],
+                                                [{ list: "ordered" }, { list: "bullet" }],
+                                                ["link", "image"],
+                                                ["clean"]
+                                            ],
+                                        }}
+                                        formats={[
+                                            "header",
+                                            "bold",
+                                            "italic",
+                                            "underline",
+                                            "strike",
+                                            "list",
+                                            "bullet",
+                                            "link",
+                                            "image",
+                                            "align"
+                                        ]}
+                                        style={{ background: "white", marginBottom: 20 }}
+                                    />
+                                </div>
                                 <div style={{ marginTop: 10 }}>
                                     <button onClick={onSave}>Сохранить</button>
                                 </div>
