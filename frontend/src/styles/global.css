@@ -33,6 +33,11 @@ a {
     text-align: justify;
 }
 
+.ql-editor {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+}
+
 .ql-editor img.ql-align-center {
     display: block;
     margin-left: auto;
