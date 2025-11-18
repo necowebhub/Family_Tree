@@ -314,8 +314,8 @@ export default function AdminPage() {
                                 <label>Контент</label>
                                 <ReactQuill
                                     value={selected.comment_text || ""}
-                                    onChange={(e) =>
-                                        setSelected({ ...selected, comment_text: e.target.value })
+                                    onChange={ value =>
+                                        setSelected({ ...selected, comment_text: value })
                                     }
                                     theme="snow"
                                     modules={{
