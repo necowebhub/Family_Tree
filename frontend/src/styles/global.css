@@ -17,6 +17,13 @@ a {
     color:inherit; 
 }
 
+.ql-container {
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
 .ql-align-left {
     text-align: left;
 }
@@ -34,8 +41,9 @@ a {
 }
 
 .ql-editor {
-    white-space: pre-wrap !important;
-    word-wrap: break-word !important;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .ql-editor img.ql-align-center {
