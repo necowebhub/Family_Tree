@@ -158,12 +158,13 @@ export default function AdminPage() {
                         <form 
                             onSubmit={(e) => {
                                 e.preventDefault();
-                                onLogin;
+                                onLogin();
                             }}
                         >
                             <label>Почта
                                 <br />
                                 <input
+                                    type="email"
                                     value={authState.email}
                                     onChange={(e) =>
                                         setAuthState({ ...authState, email: e.target.value })
