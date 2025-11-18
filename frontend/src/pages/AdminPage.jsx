@@ -155,28 +155,35 @@ export default function AdminPage() {
 
                 {!showReset ? (
                     <>
-                        <label>Почта
+                        <form 
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                onLogin;
+                            }}
+                        >
+                            <label>Почта
+                                <br />
+                                <input
+                                    value={authState.email}
+                                    onChange={(e) =>
+                                        setAuthState({ ...authState, email: e.target.value })
+                                    }
+                                />
+                            </label>
                             <br />
-                            <input
-                                value={authState.email}
-                                onChange={(e) =>
-                                    setAuthState({ ...authState, email: e.target.value })
-                                }
-                            />
-                        </label>
-                        <br />
-                        <label>Пароль
+                            <label>Пароль
+                                <br />
+                                <input
+                                    type="password"
+                                    value={authState.password}
+                                    onChange={(e) =>
+                                        setAuthState({ ...authState, password: e.target.value })
+                                    }
+                                />
+                            </label>
                             <br />
-                            <input
-                                type="password"
-                                value={authState.password}
-                                onChange={(e) =>
-                                    setAuthState({ ...authState, password: e.target.value })
-                                }
-                            />
-                        </label>
-                        <br />
-                        <button onClick={onLogin}>Войти</button>
+                            <button type="submit">Войти</button>
+                        </form>
                         <div style={{ marginTop: 10 }}>
                             <button
                                 onClick={() => setShowReset(true)}
