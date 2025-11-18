@@ -351,7 +351,9 @@ export default function AdminPage() {
                         )}
                     </div>
                 </div>
-                <hr />
+            </div>
+            <hr />
+            <div style={{ padding: "20px", maxWidth: 900, margin: "0 auto" }}>
                 <div style={{ marginBottom: 20 }}>
                     <div style={{ padding: 20 }}>
                         <h3>История семьи Антипиных</h3>
@@ -386,11 +388,13 @@ export default function AdminPage() {
                         
                         <button onClick={saveSingleText} style={{ marginTop: 10 }}>Сохранить блок</button>
                     </div>
-                    <hr />
-                    <div style={{ padding: 20 }}>
-                        <h3>Footer (read-only)</h3>
-                        <div dangerouslySetInnerHTML={{ __html: footer?.html || "" }} />
-                    </div>
+                </div>
+            </div>
+            <hr />
+            <div style={{ padding: "20px", maxWidth: 900, margin: "0 auto" }}>
+                <div style={{ padding: 20 }}>
+                    <h3>Footer (read-only)</h3>
+                    <div dangerouslySetInnerHTML={{ __html: footer?.html || "" }} />
                 </div>
             </div>
         </div>
