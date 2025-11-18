@@ -311,16 +311,38 @@ export default function AdminPage() {
                                         />
                                 </label>
                                 <br />
-                                <label>Контент
-                                    <br />
-                                    <textarea
-                                        rows={3}
-                                        value={selected.comment_text || ""}
-                                        onChange={(e) =>
-                                            setSelected({ ...selected, comment_text: e.target.value })
-                                        }
-                                    />
-                                </label>
+                                <label>Контент</label>
+                                <ReactQuill
+                                    value={selected.comment_text || ""}
+                                    onChange={(e) =>
+                                        setSelected({ ...selected, comment_text: e.target.value })
+                                    }
+                                    theme="snow"
+                                    modules={{
+                                        toolbar: [
+                                            [{ header: [1, 2, 3, false] }],
+                                            ["bold", "italic", "underline", "strike"],
+                                            [{ align: [] }],
+                                            [{ list: "ordered" }, { list: "bullet" }],
+                                            ["link", "image"],
+                                            ["clean"]
+                                        ],
+                                    }}
+                                    formats={[
+                                        "header",
+                                        "bold",
+                                        "italic",
+                                        "underline",
+                                        "strike",
+                                        "list",
+                                        "bullet",
+                                        "link",
+                                        "image",
+                                        "align"
+                                    ]}
+                                    style={{ background: "white", marginBottom: 20 }}
+                                />
+                                
                                 <div style={{ marginTop: 10 }}>
                                     <button onClick={onSave}>Сохранить</button>
                                 </div>

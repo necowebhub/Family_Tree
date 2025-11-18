@@ -1,4 +1,35 @@
-.overlay { position:fixed; inset:0; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center; z-index:1000; }
-.modal { background:#fff; padding:18px; border-radius:8px; max-width:600px; width:90%; position:relative; }
-.close { position:absolute; right:10px; top:6px; border:none; background:transparent; font-size:20px; cursor:pointer; }
-.img { max-width:100%; margin-top:10px; display:block; }
+.overlay { 
+    position:fixed; 
+    inset:0; 
+    background:rgba(0,0,0,0.4); 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    z-index:1000; 
+}
+
+.modal { 
+    background:#fff; 
+    padding:18px; 
+    border-radius:8px; 
+    max-width:600px; 
+    width:90%; 
+    position:relative; 
+}
+
+.close { 
+    position:absolute; 
+    right:10px; 
+    top:6px; 
+    border:none; 
+    background:transparent; 
+    font-size:20px; 
+    cursor:pointer; 
+}
+
+.img { 
+    max-width:100%; 
+    margin-top:10px; 
+    display:block; 
+    height: auto;
+}
