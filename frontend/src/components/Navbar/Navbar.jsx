@@ -4,13 +4,25 @@ import { Link as ScrollLink } from "react-scroll";
 import styles from "./Navbar.module.css";
 
 export default function Navbar({ isAdmin=false, onLogout }) {
+    const scrollTo = (target) => {
+        if (isAdmin) {
+            window.location.href = "/#" + target;
+        } else {
+            scroller.scrollTo(target, {
+                smooth: true,
+                duration: 600,
+                offset: -80,
+            });
+        }
+    };
+
     return (
         <header className={styles.header}>
             <nav className={styles.nav}>
                 <div className={styles.left}>
-                    <ScrollLink className={styles.link} to="top" smooth={true} duration={600} offset={-80}>Главная</ScrollLink>
-                    <ScrollLink className={styles.link} to="about" smooth={true} duration={600} offset={-80}>Обо мне</ScrollLink>
-                    <ScrollLink className={styles.link} to="contacts" smooth={true} duration={600} offset={-80}>Контакты</ScrollLink>
+                    <span className={styles.link} onClick={() => scrollTo("top")}>Главная</span>
+                    <span className={styles.link} onClick={() => scrollTo("about")}>Обо мне</span>
+                    <span className={styles.link} onClick={() => scrollTo("contacts")}>Контакты</span>
                 </div>
                 <div className={styles.right}>
                     {isAdmin ? (
