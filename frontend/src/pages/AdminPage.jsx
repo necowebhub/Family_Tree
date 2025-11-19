@@ -352,7 +352,7 @@ export default function AdminPage() {
                     </div>
                 </div>
             </div>
-            <hr />
+            <hr style="border: none; border-top: 2px dashed #372414;"/>
             <div style={{ padding: "20px", maxWidth: 900, margin: "0 auto" }}>
                 <div style={{ marginBottom: 20 }}>
                     <div style={{ padding: 20 }}>
@@ -390,7 +390,7 @@ export default function AdminPage() {
                     </div>
                 </div>
             </div>
-            <hr />
+            <hr style="border: none; border-top: 2px dashed #372414;"/>
             <div style={{ padding: "20px", maxWidth: 900, margin: "0 auto" }}>
                 <div style={{ padding: 20 }}>
                     <h3>Footer (read-only)</h3>
