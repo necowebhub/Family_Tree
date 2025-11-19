@@ -67,3 +67,17 @@ a {
     min-width: 0 !important;
     flex-shrink: 1 !important;
 }
+
+.admin-btn {
+    background: #B7A087;
+    color: #e7d5c3;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.admin-btn:hover {
+    opacity: 0.9;
+}

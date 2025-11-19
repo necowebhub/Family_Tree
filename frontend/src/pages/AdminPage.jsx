@@ -241,7 +241,7 @@ export default function AdminPage() {
 
             <div style={{ padding: "20px", maxWidth: 900, margin: "0 auto" }}>
                 <div style={{ padding: "10px 20px" }}>
-                    <button onClick={() => setShowChangePass(true)}>Сменить пароль</button>
+                    <button className = "admin-btn" onClick={() => setShowChangePass(true)}>Сменить пароль</button>
                 </div>
 
                 {showChangePass && (
@@ -345,7 +345,7 @@ export default function AdminPage() {
                                     />
                                 </div>
                                 <div style={{ marginTop: 10 }}>
-                                    <button onClick={onSave}>Сохранить</button>
+                                    <button className = "admin-btn" onClick={onSave}>Сохранить</button>
                                 </div>
                             </>
                         )}
@@ -386,7 +386,7 @@ export default function AdminPage() {
                             style={{ background: "white", marginBottom: 20 }}
                         />
                         
-                        <button onClick={saveSingleText} style={{ marginTop: 10 }}>Сохранить блок</button>
+                        <button className = "admin-btn" onClick={saveSingleText}>Сохранить блок</button>
                     </div>
                 </div>
             </div>
