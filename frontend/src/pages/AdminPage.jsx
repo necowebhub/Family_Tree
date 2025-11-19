@@ -223,7 +223,12 @@ export default function AdminPage() {
                             />
                         </label>
                         <br />
-                        <button className="admin-btn" onClick={onResetPassword}>Отправить письмо</button>
+                        <button 
+                            className="admin-btn" 
+                            style={{ marginTop: 10 }} 
+                            onClick={onResetPassword}
+                        >Отправить письмо
+                        </button>
                         <button
                             onClick={() => setShowReset(false)}
                             style={{ marginLeft: 10 }}
@@ -256,10 +261,16 @@ export default function AdminPage() {
                             />
                         </label>
                         <br />
-                        <button onClick={onChangePassword}>Сменить</button>
+                        <button 
+                            className="admin-btn"
+                            onClick={onChangePassword}
+                            style={{ marginLeft: 10, marginTop: 10 }}
+                        >Сменить
+                        </button>
                         <button
+                            className="admin-btn"
                             onClick={() => setShowChangePass(false)}
-                            style={{ marginLeft: 10 }}
+                            style={{ marginLeft: 10, marginTop: 10 }}
                         >Отмена
                         </button>
                     </div>
