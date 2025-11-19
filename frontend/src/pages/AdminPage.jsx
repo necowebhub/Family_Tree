@@ -183,7 +183,7 @@ export default function AdminPage() {
                                 />
                             </label>
                             <br />
-                            <button type="submit">Войти</button>
+                            <button className="admin-btn" type="submit">Войти</button>
                         </form>
                         <div style={{ marginTop: 10 }}>
                             <button
@@ -345,7 +345,7 @@ export default function AdminPage() {
                                     />
                                 </div>
                                 <div style={{ marginTop: 10 }}>
-                                    <button className = "admin-btn" onClick={onSave}>Сохранить</button>
+                                    <button className="admin-btn" onClick={onSave}>Сохранить</button>
                                 </div>
                             </>
                         )}
@@ -386,7 +386,7 @@ export default function AdminPage() {
                             style={{ background: "white", marginBottom: 20 }}
                         />
                         
-                        <button className = "admin-btn" onClick={saveSingleText}>Сохранить блок</button>
+                        <button className="admin-btn" onClick={saveSingleText}>Сохранить блок</button>
                     </div>
                 </div>
             </div>
