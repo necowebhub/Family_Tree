@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 import styles from "./Navbar.module.css";
 
-export default function Navbar({ isAdmin=false, onLogout }) {
+export default function Navbar({ isAdmin=false, onLogout, onChangePass }) {
     const scrollTo = (target) => {
         if (isAdmin) {
             window.location.href = "/#" + target;
