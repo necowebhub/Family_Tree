@@ -183,7 +183,12 @@ export default function AdminPage() {
                                 />
                             </label>
                             <br />
-                            <button className="admin-btn" style={{ marginTop: 10 }} type="submit">Войти</button>
+                            <button 
+                                className="admin-btn" 
+                                style={{ marginTop: 10 }} 
+                                type="submit"
+                            >Войти
+                            </button>
                         </form>
                         <div style={{ marginTop: 10 }}>
                             <button
@@ -230,6 +235,7 @@ export default function AdminPage() {
                         >Отправить письмо
                         </button>
                         <button
+                            className="admin-btn"
                             onClick={() => setShowReset(false)}
                             style={{ marginLeft: 10 }}
                         >Назад
