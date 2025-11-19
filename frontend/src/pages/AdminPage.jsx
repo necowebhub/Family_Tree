@@ -248,12 +248,9 @@ export default function AdminPage() {
 
     return (
         <div>
-            <Navbar isAdmin onLogout={onLogout} />
+            <Navbar isAdmin onLogout={onLogout} onChangePass={() => setShowChangePass(true)}/>
 
             <div style={{ padding: "20px", maxWidth: 900, margin: "0 auto" }}>
-                <div style={{ padding: "10px 20px" }}>
-                    <button className = "admin-btn" onClick={() => setShowChangePass(true)}>Сменить пароль</button>
-                </div>
 
                 {showChangePass && (
                     <div style={{ padding: "10px 20px" }}>

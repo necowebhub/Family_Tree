@@ -26,7 +26,10 @@ export default function Navbar({ isAdmin=false, onLogout }) {
                 </div>
                 <div className={styles.right}>
                     {isAdmin ? (
-                        <button className={styles.button} onClick={onLogout}>Выйти</button>
+                        <>
+                            <button className={styles.button} onClick={onChangePass} style={{ marginRight: 10 }} >Сменить пароль</button>
+                            <button className={styles.button} onClick={onLogout} >Выйти</button>
+                        </>
                     ) : (
                         <RouterLink className={styles.button} to="/admin">Войти</RouterLink>
                     )}
