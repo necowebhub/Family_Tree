@@ -37,7 +37,7 @@ function DraggableNode({ node, depth = 0, onSelect, onAdd, onDelete, isDragging 
     data: { node },
   });
 
-  handleSelect = (e) => {
+  const handleSelect = (e) => {
     if (isDragging) return;
     e.stopPropagation();
     onSelect(node);
