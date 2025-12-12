@@ -40,11 +40,6 @@
     line-height: 1;
 }
 
-.close:hover {
-    background: #9A8570;
-    border-radius: 4px;
-}
-
 .body {
     overflow-y: auto;
     padding-right: 10px;
