@@ -12,6 +12,7 @@
     padding: 4px 6px; 
     border-radius: 6px; 
     transition: background 0.2s;
+    display: inline-block;
 }
 
 .clickable:hover { 

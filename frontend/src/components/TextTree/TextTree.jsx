@@ -12,9 +12,16 @@ export default function TextTree({ items }) {
             <div 
                 className={styles.clickable} 
                 onClick={() => setModalItem(node)}
-                style={{ backgroundColor: node.bgColor || 'transparent' }}
             >
-                <span className={styles.title}>
+                <span 
+                    className={styles.title}
+                    style={{ 
+                        backgroundColor: node.bgColor || 'transparent',
+                        padding: '2px 4px',
+                        borderRadius: '3px',
+                        display: 'inline-block'
+                    }}
+                >
                     {node.title} 
                     {(node.birthday || node.deathday) && (
                         <> ({node.birthday || "?"} — {node.deathday || "?"})</>

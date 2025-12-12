@@ -56,7 +56,6 @@ function DraggableNode({ node, depth = 0, onSelect, onAdd, onDelete, isDragging 
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: node.bgColor || 'transparent',
   };
 
   return (
@@ -72,7 +71,14 @@ function DraggableNode({ node, depth = 0, onSelect, onAdd, onDelete, isDragging 
         <span 
           className={styles.title}
           onClick={handleSelect}
-          style={{ cursor: 'pointer', fles: 1 }}
+          style={{ 
+            cursor: 'pointer', 
+            fles: 1,
+            backgroundColor: node.bgColor || 'transparent',
+            padding: '2px 4px',
+            borderRadius: '3px',
+            display: 'inline-block'
+          }}
         >
           {node.title || "(без названия)"}
         </span>
