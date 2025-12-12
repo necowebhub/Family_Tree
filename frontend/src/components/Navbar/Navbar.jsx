@@ -1,6 +1,6 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { Link as ScrollLink } from "react-scroll";
+import { scroller } from "react-scroll";
 import styles from "./Navbar.module.css";
 
 export default function Navbar({ isAdmin=false, onLogout, onChangePass }) {
@@ -20,9 +20,9 @@ export default function Navbar({ isAdmin=false, onLogout, onChangePass }) {
         <header className={styles.header}>
             <nav className={styles.nav}>
                 <div className={styles.left}>
-                    <span className={styles.link} onClick={() => scrollTo("top")}>Главная</span>
-                    <span className={styles.link} onClick={() => scrollTo("about")}>Обо мне</span>
-                    <span className={styles.link} onClick={() => scrollTo("contacts")}>Контакты</span>
+                    <button className={styles.linkButton} onClick={() => scrollTo("top")}>Главная</button>
+                    <button className={styles.linkButton} onClick={() => scrollTo("about")}>Обо мне</button>
+                    <button className={styles.linkButton} onClick={() => scrollTo("contacts")}>Контакты</button>
                 </div>
                 <div className={styles.right}>
                     {isAdmin ? (

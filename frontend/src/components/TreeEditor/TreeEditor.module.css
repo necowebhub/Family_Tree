@@ -13,10 +13,7 @@
     height: 6px;
     background: transparent;
     transition: background 0.15s ease;
-}
-
-.dropZone:hover {
-    background: rgba(0, 170, 255, 0.15);
+    border-radius: 2px;
 }
 
 .actions {

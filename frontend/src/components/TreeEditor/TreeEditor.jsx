@@ -22,8 +22,9 @@ function DropZone({ id, depth }) {
       style={{
         height: 6,
         marginLeft: depth * 20,
-        background: isOver ? "rgba(255, 255, 255, 1)" : "transparent",
-        transition: "background 0.08s ease",
+        background: isOver ? "#2d2318" : "transparent",
+        border: isOver ? "2px dashed #17120cff" : "none",
+        transition: "all 0.15s ease",
       }}
     />
   );
@@ -35,6 +36,12 @@ function DraggableNode({ node, depth = 0, onSelect, onAdd, onDelete, isDragging 
     id: node.id,
     data: { node },
   });
+
+  handleSelect = (e) => {
+    if (isDragging) return;
+    e.stopPropagation();
+    onSelect(node);
+  };
 
   const style = {
     transform: transform
@@ -60,9 +67,14 @@ function DraggableNode({ node, depth = 0, onSelect, onAdd, onDelete, isDragging 
         {...listeners}
         {...attributes}
         style={style}
-        onClick={() => onSelect(node)}
       >
-        <span className={styles.title}>{node.title || "(без названия)"}</span>
+        <span 
+          className={styles.title}
+          onClick={handleSelect}
+          style={{ cursor: 'pointer', fles: 1 }}
+        >
+          {node.title || "(без названия)"}
+        </span>
 
         {!isDragging && (
           <span className={styles.actions}>

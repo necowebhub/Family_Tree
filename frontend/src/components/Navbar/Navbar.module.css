@@ -18,11 +18,20 @@
     gap:14px; 
 }
 
-.link { 
+.linkButton { 
+    background: none;
+    border: none;
     text-decoration:none; 
     color:#CECCC8; 
     font-weight:500; 
     cursor:pointer;
+    font-family: 'EB Garamond', Garamond, serif;
+    font-size: 16px;
+    padding: 0;
+}
+
+.linkButton:hover {
+    text-decoration: underline;
 }
 
 .right {

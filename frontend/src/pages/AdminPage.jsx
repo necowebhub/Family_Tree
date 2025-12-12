@@ -91,7 +91,9 @@ export default function AdminPage() {
         });
 
         setItems((prev) => [...prev, node]);
-        setSelected(node);
+        setTimeout(() => {
+            setSelected(node);
+        }, 100);
     }
 
     async function onSave() {
