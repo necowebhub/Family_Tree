@@ -252,7 +252,7 @@ export default function AdminPage() {
         <div>
             <Navbar isAdmin onLogout={onLogout} onChangePass={() => setShowChangePass(true)}/>
 
-            <div style={{ padding: "20px", maxWidth: 900, margin: "0 auto" }}>
+            <div style={{ padding: "20px", maxWidth: 1200, margin: "0 auto" }}>
 
                 {showChangePass && (
                     <div style={{ padding: "10px 20px" }}>
@@ -369,7 +369,7 @@ export default function AdminPage() {
                 </div>
             </div>
             <hr style={{ border: "none", borderTop: "2px dotted #372414" }}/>
-            <div style={{ padding: "20px", maxWidth: 900, margin: "0 auto" }}>
+            <div style={{ padding: "20px", maxWidth: 1200, margin: "0 auto" }}>
                 <div style={{ marginBottom: 20 }}>
                     <div style={{ padding: 20 }}>
                         <h3>История семьи Антипиных</h3>
@@ -407,8 +407,8 @@ export default function AdminPage() {
                 </div>
             </div>
             <hr style={{ border: "none", borderTop: "2px dotted #372414" }}/>
-            <div style={{ padding: "20px", maxWidth: 900, margin: "0 auto" }}>
-                <div style={{ padding: 20 }}>
+            <div style={{ padding: "20px", maxWidth: 1200, margin: "0 auto" }}>
+                <div style={{ padding: 20, alignContent: 'center' }}>
                     <h3>Footer (read-only)</h3>
                     <div dangerouslySetInnerHTML={{ __html: footer?.html || "" }} />
                 </div>
