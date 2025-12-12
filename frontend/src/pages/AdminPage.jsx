@@ -408,7 +408,7 @@ export default function AdminPage() {
             </div>
             <hr style={{ border: "none", borderTop: "2px dotted #372414" }}/>
             <div style={{ padding: "20px", maxWidth: 1200, margin: "0 auto" }}>
-                <div style={{ padding: 20, alignContent: 'center' }}>
+                <div style={{ padding: 20, justifyContent: 'center' }}>
                     <h3>Footer (read-only)</h3>
                     <div dangerouslySetInnerHTML={{ __html: footer?.html || "" }} />
                 </div>
