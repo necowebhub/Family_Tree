@@ -48,7 +48,7 @@ function DraggableNode({ node, depth = 0, onSelect, onAdd, onDelete, isDragging 
       ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
       : undefined,
     marginLeft: depth * 20,
-    padding: "4px 6px",
+    padding: "2px 6px",
     borderRadius: 4,
     cursor: "grab",
     transition: "background 0.12s ease",
@@ -56,6 +56,7 @@ function DraggableNode({ node, depth = 0, onSelect, onAdd, onDelete, isDragging 
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: node.bgColor || 'transparent',
   };
 
   return (

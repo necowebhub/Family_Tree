@@ -9,11 +9,15 @@ export default function TextTree({ items }) {
 
     const renderNode = (node, level = 0) => (
         <div key={node.id} className={styles.node} style={{ marginLeft: level * 18 }}>
-            <div className={styles.clickable} onClick={() => setModalItem(node)}>
+            <div 
+                className={styles.clickable} 
+                onClick={() => setModalItem(node)}
+                style={{ backgroundColor: node.bgColor || 'transparent' }}
+            >
                 <span className={styles.title}>
                     {node.title} 
                     {(node.birthday || node.deathday) && (
-                        <> ({node.birthday || "не известно"} — {node.deathday || "по сей день"})</>
+                        <> ({node.birthday || "?"} — {node.deathday || "?"})</>
                     )}
                 </span>
             </div>

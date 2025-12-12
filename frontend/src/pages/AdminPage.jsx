@@ -103,12 +103,12 @@ export default function AdminPage() {
             birthday: selected.birthday,
             deathday: selected.deathday,
             comment_text: selected.comment_text,
+            bgColor: selected.bgColor || "",
         });
         setItems((prev) =>
             prev.map((item) => (item.id === updated.id ? updated : item))
         );
         setSelected(updated);
-        alert("Сохранено");
     }
 
     async function onDelete(id) {
@@ -302,6 +302,7 @@ export default function AdminPage() {
                                 <label>ФИО
                                     <br />
                                     <input
+                                        type="text"
                                         value={selected.title || ""}
                                         onChange={(e) =>
                                             setSelected({ ...selected, title: e.target.value })
@@ -309,17 +310,39 @@ export default function AdminPage() {
                                     />
                                 </label>
                                 <br />
+                                <label>Цвет элемента
+                                    <br />
+                                    <input 
+                                        type="color"
+                                        value={selected.bgColor || ""}
+                                        onChange={(e) => 
+                                            setSelected({ ...selected, bgColor: e.target.value })
+                                        }
+                                        style={{ width: '60px', height: '30px', cursor: 'pointer' }}
+                                    />
+                                    <button
+                                        className="admin-btn"
+                                        onClick={() => setSelected({ ...selected, bgColor: "" })}
+                                        style={{ marginLeft: 10, padding: '4px 8px', fontSize: '12px' }}
+                                    >
+                                        Сбросить
+                                    </button>
+                                </label>
+                                <br />
                                 <label>Дни жизни
                                         <br />
                                         <input 
-                                            type="date"
+                                            type="text"
+                                            placeholder="?"
                                             value={selected.birthday || ""}
                                             onChange={(e) => 
                                                 setSelected({ ...selected, birthday: e.target.value })
                                             }
                                         />
                                         <span> - </span>
-                                        <input type="date"
+                                        <input 
+                                            type="text"
+                                            placeholder="?"
                                             value={selected.deathday || ""}
                                             onChange={(e) => 
                                                 setSelected({ ...selected, deathday: e.target.value })

@@ -31,12 +31,13 @@ export async function createNode(data) {
             : -1;
 
     const docRef = await addDoc(collection(db, "components"), {
-        title: data.title || "Иванов Иван Иванович",
+        title: data.title || "Антипов Иван Иванович",
         birthday: data.birthday || "",
         deathday: data.deathday || "",
         comment_text: data.comment_text || "",
         parent_id: data.parent_id || null,
         position: maxPosition + 1,
+        bgColor: data.bgColor || "",
     });
 
     const snap = await getDoc(docRef);

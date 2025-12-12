@@ -3,7 +3,8 @@
 }
 
 .node {
-    margin-bottom: 4px; 
+    margin-bottom: 2px; 
+    line-height: 1.3;
 }
 
 .clickable { 
@@ -19,4 +20,5 @@
 
 .title { 
     font-weight: 500; 
+    font-size: 14px;
 }
