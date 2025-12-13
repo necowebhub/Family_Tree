@@ -48,6 +48,13 @@ a {
     max-width: 100%;
 }
 
+.ql-editor img {
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 600px !important;
+    object-fit: contain !important;
+}
+
 .ql-editor img.ql-align-center {
     display: block;
     margin-left: auto;
@@ -84,4 +91,65 @@ a {
 
 .admin-btn:hover {
     opacity: 0.9;
+}
+
+/* Адаптация для singleText */
+.single-text-content {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.single-text-content img {
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 600px !important;
+    object-fit: contain !important;
+    display: block;
+}
+
+/* Контейнер админки для дерева и редактора */
+.admin-tree-editor-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.admin-tree-section {
+    flex: 1;
+}
+
+.admin-editor-section {
+    flex: 1;
+}
+
+/* Мобильная адаптация */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+    
+    .ql-editor img {
+        max-height: 400px !important;
+    }
+    
+    .single-text-content img {
+        max-height: 400px !important;
+    }
+    
+    .admin-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+    
+    /* Мобильная раскладка для админки */
+    .admin-tree-editor-container {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .admin-tree-section,
+    .admin-editor-section {
+        width: 100%;
+    }
 }

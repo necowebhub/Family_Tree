@@ -152,7 +152,7 @@ export default function AdminPage() {
 
     if (!user) {
         return (
-            <div style={{ maxWidth: 600, margin: "40px auto" }}>
+            <div style={{ maxWidth: 600, margin: "40px auto", padding: "0 20px" }}>
                 <h2>Админ — вход</h2>
 
                 {!showReset ? (
@@ -171,6 +171,7 @@ export default function AdminPage() {
                                     onChange={(e) =>
                                         setAuthState({ ...authState, email: e.target.value })
                                     }
+                                    style={{ width: "100%", maxWidth: "400px" }}
                                 />
                             </label>
                             <br />
@@ -182,6 +183,7 @@ export default function AdminPage() {
                                     onChange={(e) =>
                                         setAuthState({ ...authState, password: e.target.value })
                                     }
+                                    style={{ width: "100%", maxWidth: "400px" }}
                                 />
                             </label>
                             <br />
@@ -227,6 +229,7 @@ export default function AdminPage() {
                             <input
                                 value={resetEmail}
                                 onChange={(e) => setResetEmail(e.target.value)}
+                                style={{ width: "100%", maxWidth: "400px" }}
                             />
                         </label>
                         <br />
@@ -263,27 +266,34 @@ export default function AdminPage() {
                                 type="password"
                                 value={newPass}
                                 onChange={(e) => setNewPass(e.target.value)}
+                                style={{ width: "100%", maxWidth: "400px" }}
                             />
                         </label>
                         <br />
                         <button 
                             className="admin-btn"
                             onClick={onChangePassword}
-                            style={{ marginLeft: 10, marginTop: 10 }}
+                            style={{ marginLeft: 0, marginTop: 10, marginRight: 10 }}
                         >Сменить
                         </button>
                         <button
                             className="admin-btn"
                             onClick={() => setShowChangePass(false)}
-                            style={{ marginLeft: 10, marginTop: 10 }}
+                            style={{ marginTop: 10 }}
                         >Отмена
                         </button>
                     </div>
                 )}
 
-                <div style={{ display: "flex", gap: 20, padding: 20 }}>
-                    <div className="flex-col" style={{ flex: 1 }}>
+                <div className="admin-tree-editor-container">
+                    <div className="flex-col admin-tree-section">
                         <h3>Семейное дерево Антипиных</h3>
+                        <div style={{
+                            border: "1px solid #bebebe",
+                            borderRadius: "8px",
+                            background: "#fff",
+                            overflow: "hidden"
+                        }}>
                             <TreeEditor
                                 items={items}
                                 setItems={setItems}
@@ -291,9 +301,10 @@ export default function AdminPage() {
                                 onAdd={onAdd}
                                 onDelete={onDelete}
                             />
+                        </div>
                     </div>
 
-                    <div className="flex-col" style={{ flex: 1 }}>
+                    <div className="flex-col admin-editor-section">
                         <h3>Редактор выбранного</h3>
                         {!selected ? (
                             <div>Выбери компонент слева</div>
@@ -307,6 +318,7 @@ export default function AdminPage() {
                                         onChange={(e) =>
                                             setSelected({ ...selected, title: e.target.value })
                                         }
+                                        style={{ width: "100%", maxWidth: "400px" }}
                                     />
                                 </label>
                                 <br />
@@ -314,7 +326,7 @@ export default function AdminPage() {
                                     <br />
                                     <input 
                                         type="color"
-                                        value={selected.bgColor || ""}
+                                        value={selected.bgColor || "#ffffff"}
                                         onChange={(e) => 
                                             setSelected({ ...selected, bgColor: e.target.value })
                                         }
@@ -330,7 +342,8 @@ export default function AdminPage() {
                                 </label>
                                 <br />
                                 <label>Дни жизни
-                                        <br />
+                                    <br />
+                                    <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
                                         <input 
                                             type="text"
                                             placeholder="?"
@@ -338,16 +351,19 @@ export default function AdminPage() {
                                             onChange={(e) => 
                                                 setSelected({ ...selected, birthday: e.target.value })
                                             }
+                                            style={{ flex: "1", minWidth: "80px", maxWidth: "150px" }}
                                         />
-                                        <span> - </span>
+                                        <span> — </span>
                                         <input 
                                             type="text"
                                             placeholder="?"
                                             value={selected.deathday || ""}
                                             onChange={(e) => 
                                                 setSelected({ ...selected, deathday: e.target.value })
-                                            }                                        
+                                            }
+                                            style={{ flex: "1", minWidth: "80px", maxWidth: "150px" }}
                                         />
+                                    </div>
                                 </label>
                                 <br />
                                 <label>Контент</label>
