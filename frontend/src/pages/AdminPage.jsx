@@ -146,7 +146,6 @@ export default function AdminPage() {
 
     async function saveSingleText() {
         await updateSingleText({ content: singleText });
-        alert("Сохранено");
     }
 
 
