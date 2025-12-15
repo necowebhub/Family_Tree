@@ -1,4 +1,4 @@
-# Antipyn't Family Tree
+# Фамильное древо Антипиных (Antipyn't Family Tree)
 
 A React-based family tree web application with admin panel for managing genealogical data. Built with Firebase for backend services and featuring a drag-and-drop tree editor.
 
@@ -157,3 +157,7 @@ Requires a modern browser with JavaScript enabled. The application uses:
 
 email: 63we0la45@mozmail.com
 tg: https://t.me/epithah
+
+## License
+
+© 2025 Антипин Константин Валерьевич. All rights reserved.
