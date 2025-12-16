@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import TreeEditor from "../components/TreeEditor/TreeEditor";
 import {
@@ -10,10 +10,8 @@ import {
     getSingleText,
     updateSingleText,
     getFooter,
-    login,
     logout,
     onAuthChange,
-    resetPassword,
     changePassword,
 } from "../api";
 
@@ -26,21 +24,13 @@ export default function AdminPage() {
     const [selected, setSelected] = useState(null);
     const [singleText, setSingleText] = useState("");
     const [footer, setFooter] = useState(null);
-    const [user, setUser] = useState(null);
-    const [authState, setAuthState] = useState({ email: "", password: "" });
-    const [showReset, setShowReset] = useState(false);
-    const [resetEmail, setResetEmail] = useState("");
     const [showChangePass, setShowChangePass] = useState(false);
     const [newPass, setNewPass] = useState("");
 
     useEffect(() => {
-        const unsub = onAuthChange((u) => {
-            setUser(u);
-            if (u) refresh();
-        });
+        refresh();
         getFooter().then(setFooter);
         getSingleText().then((d) => setSingleText(d.content || ""));
-        return () => unsub();
     }, []);
 
     async function refresh() {
@@ -48,33 +38,24 @@ export default function AdminPage() {
         setItems(data);                
     }
 
-    async function onLogin() {
-        try {
-            await login(authState.email, authState.password);
-            await refresh();
-        } catch (e) {
-            alert("Ошибка входа: " + e.message);
-        }
-    }
+    const navigate = useNavigate();
 
-    async function onResetPassword() {
-        try {
-            await resetPassword(resetEmail);
-            alert("Письмо для сброса пароля отправлено на " + resetEmail);
-            setShowReset(false);
-        } catch (e) {
-            alert("Ошибка: " + e.message);
-        }
-    }
-
-    function onLogout() {
-        logout();
+    async function onLogout() {
+        setShowChangePass(false);
+        await logout();
+        navigate("/login", { replace: true })
     }
 
     async function onChangePassword() {
+        if (!newPass || newPass.length < 6) {
+            alert("Пароль должен быть не короче 6 символов");
+            return;
+        }
+
         try {
             await changePassword(newPass);
             alert("Пароль успешно изменён");
+            setNewPass("");
             setShowChangePass(false);
         } catch (e) {
             alert("Ошибка: " + e.message);
@@ -148,111 +129,9 @@ export default function AdminPage() {
         await updateSingleText({ content: singleText });
     }
 
-
-    if (!user) {
-        return (
-            <div style={{ maxWidth: 600, margin: "40px auto", padding: "0 20px" }}>
-                <h2>Админ — вход</h2>
-
-                {!showReset ? (
-                    <>
-                        <form 
-                            onSubmit={(e) => {
-                                e.preventDefault();
-                                onLogin();
-                            }}
-                        >
-                            <label>Почта
-                                <br />
-                                <input
-                                    type="email"
-                                    value={authState.email}
-                                    onChange={(e) =>
-                                        setAuthState({ ...authState, email: e.target.value })
-                                    }
-                                    style={{ width: "100%", maxWidth: "400px" }}
-                                />
-                            </label>
-                            <br />
-                            <label>Пароль
-                                <br />
-                                <input
-                                    type="password"
-                                    value={authState.password}
-                                    onChange={(e) =>
-                                        setAuthState({ ...authState, password: e.target.value })
-                                    }
-                                    style={{ width: "100%", maxWidth: "400px" }}
-                                />
-                            </label>
-                            <br />
-                            <button 
-                                className="admin-btn" 
-                                style={{ marginTop: 10 }} 
-                                type="submit"
-                            >Войти
-                            </button>
-                        </form>
-                        <div style={{ marginTop: 10 }}>
-                            <button
-                                onClick={() => setShowReset(true)}
-                                style={{
-                                    background: "transparent",
-                                    border: "none",
-                                    color: "blue",
-                                    cursor: "pointer"
-                                }}
-                            >
-                                Забыли пароль?
-                            </button>
-                        </div>
-                        <div style={{ marginTop: 20 }}>
-                            <button 
-                                onClick={() => (window.location.href = "/")} 
-                                style={{ 
-                                    background: "transparent", 
-                                    border: "none", 
-                                    color: "blue", 
-                                    cursor: "pointer" 
-                                }}
-                            >
-                                ← Вернуться на главную
-                            </button>
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        <h3>Восстановление пароля</h3>
-                        <label>Ваша почта
-                            <br />
-                            <input
-                                value={resetEmail}
-                                onChange={(e) => setResetEmail(e.target.value)}
-                                style={{ width: "100%", maxWidth: "400px" }}
-                            />
-                        </label>
-                        <br />
-                        <button 
-                            className="admin-btn" 
-                            style={{ marginTop: 10 }} 
-                            onClick={onResetPassword}
-                        >Отправить письмо
-                        </button>
-                        <button
-                            className="admin-btn"
-                            onClick={() => setShowReset(false)}
-                            style={{ marginLeft: 10 }}
-                        >Назад
-                        </button>
-                    </>
-                )}
-            </div>
-        );
-    }
-
     return (
         <div>
-            <Navbar isAdmin onLogout={onLogout} onChangePass={() => setShowChangePass(true)}/>
+            <Navbar onLogout={onLogout} onChangePass={() => setShowChangePass(true)}/>
 
             <div style={{ padding: "20px", maxWidth: 1200, margin: "0 auto" }}>
 
