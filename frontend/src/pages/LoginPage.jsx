@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { login, resetPassword } from "../api";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
     const [authState, setAuthState] = useState({ email: "", password: "" });
     const [showReset, setShowReset] = useState(false);
     const [resetEmail, setResetEmail] = useState("");
 
+    const navigate = useNavigate();
+
     async function onLogin() {
         try {
-        await login(authState.email, authState.password);
-        navigate("/", { replace: true });
+            await login(authState.email, authState.password);
+            navigate("/", { replace: true });
         } catch (e) {
-        alert("Ошибка входа: " + e.message);
+            alert("Ошибка входа: " + e.message);
         }
     }
 
@@ -42,7 +45,6 @@ export default function LoginPage() {
                         }
                         />
                     </label>
-                    <br />
                     <label>
                         Пароль
                         <br />
@@ -54,11 +56,11 @@ export default function LoginPage() {
                         }
                         />
                     </label>
-                    <br />
-                    <button onClick={onLogin}>Войти</button>
+                    <button className="auth-btn" onClick={onLogin}>Войти</button>
                     <br />
                     <button
                         onClick={() => setShowReset(true)}
+                        className="auth-btn secondary"
                         style={{
                         background: "none",
                         border: "none",

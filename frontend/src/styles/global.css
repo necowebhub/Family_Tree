@@ -207,3 +207,30 @@ a {
     outline: none;
     border-color: #b7a087;
 }
+
+.auth-btn {
+    font-family: 'EB Garamond', Garamond, serif;
+    background: linear-gradient(
+        180deg,
+        #B7A087 0%,
+        #A89274 100%
+    );
+    color: #f7ebdf;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    width: 100%;
+    margin-top: 12px;
+}
+
+.auth-btn:hover {
+    filter: brightness(1.05);
+}
+
+.auth-btn.secondary {
+    background: transparent;
+    color: #6b5a45;
+    margin-top: 6px;
+}
