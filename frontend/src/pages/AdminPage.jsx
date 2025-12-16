@@ -9,7 +9,6 @@ import {
     deleteNode,
     getSingleText,
     updateSingleText,
-    getFooter,
     logout,
     onAuthChange,
     changePassword,
@@ -23,13 +22,11 @@ export default function AdminPage() {
     const [items, setItems] = useState([]);
     const [selected, setSelected] = useState(null);
     const [singleText, setSingleText] = useState("");
-    const [footer, setFooter] = useState(null);
     const [showChangePass, setShowChangePass] = useState(false);
     const [newPass, setNewPass] = useState("");
 
     useEffect(() => {
         refresh();
-        getFooter().then(setFooter);
         getSingleText().then((d) => setSingleText(d.content || ""));
     }, []);
 
@@ -321,13 +318,6 @@ export default function AdminPage() {
                         
                         <button className="admin-btn" onClick={saveSingleText}>Сохранить блок</button>
                     </div>
-                </div>
-            </div>
-            <hr style={{ border: "none", borderTop: "2px dotted #372414" }}/>
-            <div style={{ padding: "20px", maxWidth: 1200, margin: "0 auto" }}>
-                <div style={{ padding: 20 }}>
-                    <h3>Footer (read-only)</h3>
-                    <div dangerouslySetInnerHTML={{ __html: footer?.html || "" }} />
                 </div>
             </div>
         </div>

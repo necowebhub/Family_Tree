@@ -71,11 +71,6 @@ export async function updateSingleText(data) {
     await setDoc(doc(db, "single_text", "main"), data);
 }
 
-export async function getFooter() {
-    const snap = await getDoc(doc(db, "footer", "main"));
-    return snap.exists() ? snap.data() : { html: "<p>Контакты: example@mail.com</p>" };
-}
-
 // UPLOAD
 export async function uploadFile(file) {
     const storageRef = ref(storage, "uploads/" + file.name);

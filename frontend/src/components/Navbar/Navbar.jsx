@@ -6,12 +6,6 @@ export default function Navbar({ onLogout, onChangePass }) {
     return (
         <header className={styles.header}>
             <nav className={styles.nav}>
-                <div className={styles.left}>
-                    <Link className={styles.linkButton} to="/">
-                        Редактировать
-                    </Link>
-                </div>
-
                 <div className={styles.right}>
                     <button
                         className={styles.button}
