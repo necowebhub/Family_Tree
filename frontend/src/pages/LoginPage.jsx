@@ -9,6 +9,7 @@ export default function LoginPage() {
   async function onLogin() {
     try {
       await login(authState.email, authState.password);
+      navigate("/", { replace: true });
     } catch (e) {
       alert("Ошибка входа: " + e.message);
     }
@@ -32,6 +33,7 @@ export default function LoginPage() {
         <>
           <label>
             Почта
+            <br />
             <input
               value={authState.email}
               onChange={(e) =>
@@ -42,6 +44,7 @@ export default function LoginPage() {
 
           <label>
             Пароль
+            <br />
             <input
               type="password"
               value={authState.password}
@@ -50,9 +53,9 @@ export default function LoginPage() {
               }
             />
           </label>
-
+          <br />
           <button onClick={onLogin}>Войти</button>
-
+          <br />
           <button
             onClick={() => setShowReset(true)}
             style={{
@@ -69,14 +72,17 @@ export default function LoginPage() {
       ) : (
         <>
           <h3>Восстановление пароля</h3>
+          <br />
 
           <input
             placeholder="Почта"
             value={resetEmail}
             onChange={(e) => setResetEmail(e.target.value)}
           />
+          <br />
 
           <button onClick={onResetPassword}>Отправить письмо</button>
+          <br />
           <button onClick={() => setShowReset(false)}>Назад</button>
         </>
       )}
